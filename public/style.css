@@ -153,3 +153,57 @@ button:hover {
     margin-top: 100px;
     /* 70px do header + 30px de espaço */
 }
+
+
+/* --- ADIÇÕES PARA CORRIGIR O "ESTÁTICO" --- */
+
+
+/* Adiciona transição suave a TODOS os botões */
+
+button {
+    transition: all 0.2s ease-in-out;
+}
+
+
+/* Efeito de "loading" para os botões de votação */
+
+.buttons-grid {
+    transition: opacity 0.3s ease;
+}
+
+
+/* Efeito de "hover" nos botões de votação */
+
+.vote-btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.vote-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+}
+
+
+/* Garante que o CSS do "Obrigado" esteja correto */
+
+.voted-message {
+    margin: 30px auto;
+    padding: 30px;
+    max-width: 500px;
+}
+
+.voted-message h3 {
+    margin-top: 0;
+    font-size: 1.8em;
+    color: #ffc107;
+}
+
+
+/* Ajusta o card da votação (o seu estava sem o gráfico) */
+
+.card .buttons-grid {
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
