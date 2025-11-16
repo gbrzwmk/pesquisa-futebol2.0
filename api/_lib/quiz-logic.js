@@ -1,6 +1,5 @@
-// Este é o seu 'quiz_futebol.py' traduzido para JavaScript
+// Este é o seu 'quiz_futebol.py' traduzido para JavaScript, AGORA COMPLETO
 
-// (Em um projeto real, isso viria do seu banco de dados)
 const TIMES_BRASILEIRAO_2025 = {
     'A': [
         "Atlético-MG", "Bahia", "Botafogo", "Ceará", "Corinthians",
@@ -14,8 +13,19 @@ const TIMES_BRASILEIRAO_2025 = {
         "Criciúma", "Cuiabá", "Ferroviária", "Goiás", "Novorizontino",
         "Operário-PR", "Paysandu", "Remo", "Vila Nova", "Volta Redonda"
     ],
-    'C': [ /* ...e assim por diante... */ ],
-    'D': [ /* ...e assim por diante... */ ]
+    'C': [
+        "ABC", "Aparecidense", "Botafogo-PB", "Caxias", "CSA",
+        "Confiança", "Ferroviário", "Floresta", "Jacuipense", "Joinville",
+        "Londrina", "Luverdense", "Náutico", "Retrô", "Sampaio Corrêa",
+        "São Bernardo", "São José-RS", "Ypiranga-RS", "Tombense", "Figueirense"
+    ],
+    'D': [
+        "Água Santa", "América-RN", "Anápolis", "ASA", "Azuriz", "Brasil de Pelotas",
+        "Brasiliense", "Cianorte", "Costa Rica-MS", "Democrata-GV",
+        "Hercílio Luz", "Inter de Limeira", "Ipatinga", "Itabuna", "Manaus",
+        "Maranhão", "Moto Club", "Nova Iguaçu", "Pouso Alegre", "Portuguesa-RJ",
+        "River-PI", "Santa Cruz", "Santo André", "Sergipe", "Sousa", "Treze"
+    ]
 };
 
 function shuffle(array) {
@@ -61,7 +71,7 @@ export function gerarPerguntaAleatoria() {
         while (opcoesIncorretas.length < 3) {
             const serieAleatoria = choice(seriesErradas);
             const timeErrado = choice(TIMES_BRASILEIRAO_2025[serieAleatoria]);
-            if (!opcoesIncorretas.includes(timeErrado)) {
+            if (timeErrado && !opcoesIncorretas.includes(timeErrado)) {
                 opcoesIncorretas.push(timeErrado);
             }
         }

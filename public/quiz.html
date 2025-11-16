@@ -5,6 +5,84 @@
     <meta charset="UTF-8">
     <title>Quiz</title>
     <link rel="stylesheet" href="/style.css">
+    <style>
+        .info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2em;
+            /* Aumenta o tamanho do texto */
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        
+        h4.pergunta {
+            font-size: 1.5em;
+            /* Aumenta o tamanho da pergunta */
+            margin: 30px 0;
+            min-height: 50px;
+        }
+        
+        .opcao {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 1.2em;
+            /* Aumenta o texto da opção */
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            background: #007bff;
+            border: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .opcao:hover {
+            background: #0056b3;
+        }
+        
+        .mensagem {
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            /* Aumenta o texto da resposta */
+            text-align: center;
+            /* Centraliza a resposta */
+        }
+        
+        .correta {
+            color: #d4edda;
+            background-color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .errada {
+            color: #f8d7da;
+            background-color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .btn-proxima {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background 0.3s;
+            display: inline-block;
+            /* Garante que o botão apareça */
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,7 +93,7 @@
             <a href="#" id="logout-btn">Sair</a>
         </div>
 
-        <div id="quiz-container">
+        <div id="quiz-container" style="padding: 0 30px 30px 30px;">
             <div class="info">
                 <span id="score-display">Pontos: 0</span>
                 <span id="question-count">Pergunta 1 de 5</span>
@@ -25,7 +103,7 @@
             <div id="options-container"></div>
 
             <p id="feedback-msg" class="mensagem" style="display:none;"></p>
-            <button id="next-btn" style="display:none;">Próxima &rarr;</button>
+            <button id="next-btn" class="btn-proxima" style="display:none;">Próxima &rarr;</button>
         </div>
     </div>
     <script src="/quiz-app.js"></script>
