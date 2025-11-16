@@ -12,12 +12,21 @@
     "routes": [
         { "src": "/api/login", "dest": "/api/login.js" },
         { "src": "/api/register", "dest": "/api/register.js" },
+
         { "src": "/api/get-question", "dest": "/api/get-question.js" },
+        { "src": "/api/save-score", "dest": "/api/save-score.js" },
+        { "src": "/api/get-leaderboard", "dest": "/api/get-leaderboard.js" },
+
+        { "src": "/api/get-votes", "dest": "/api/get-votes.js" },
         { "src": "/api/submit-vote", "dest": "/api/submit-vote.js" },
 
         { "src": "/quiz", "dest": "/public/quiz.html" },
         { "src": "/votacao", "dest": "/public/vote.html" },
-        { "src": "/register", "dest": "/public/register-1.html" },
+        { "src": "/ranking", "dest": "/public/leaderboard.html" },
+        { "src": "/resultado", "dest": "/public/result.html" },
+        { "src": "/registrar-1", "dest": "/public/register-1.html" },
+        { "src": "/registrar-2", "dest": "/public/register-2.html" },
+        { "src": "/registrar-3", "dest": "/public/register-3.html" },
 
         { "src": "/", "dest": "/public/login.html" },
         { "src": "/(.*)", "dest": "/public/$1" }
