@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Perfil</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="overlay"></div>
+
+    <div class="header">
+        <h3>Meu Perfil</h3>
+        <a href="/vote.html">Voltar para Votação</a>
+    </div>
+
+    <div class="card with-header">
+        <h2>Alterar Nome</h2>
+        <p style="margin-bottom: 20px;">Seu nome atual é: <strong id="current-name">...</strong></p>
+
+        <form id="profile-form">
+            <label for="novo-nome">Novo Nome Completo:</label>
+            <input type="text" id="novo-nome" name="novoNome" required>
+
+            <button type="submit">Salvar Alterações</button>
+            <p id="error-message" class="erros"></p>
+            <p id="success-message" class="mensagem correta" style="display:none;"></p>
+        </form>
+
+        <div class="register-link">
+            <a href="#" id="logout-btn" style="color: #ffc107; font-weight: bold;">Sair (Logout)</a>
+        </div>
+    </div>
+
+    <script src="/profile-app.js"></script>
+</body>
+
+</html>

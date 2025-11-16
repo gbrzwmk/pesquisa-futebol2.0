@@ -59,7 +59,7 @@ function renderChart(votos) {
                     grid: { color: 'rgba(255, 255, 255, 0.1)' }
                 },
                 x: {
-                    ticks: { color: '#eee', weight: 'bold' },
+                    ticks: { color: '#333', weight: 'bold' }, // <-- CORRIGIDO
                     grid: { display: false }
                 }
             },
