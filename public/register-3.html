@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro: Etapa 3 de 3</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <div class="card">
+        <h2>Etapa 3: Contato e Endereço</h2>
+
+        <form id="register-step3-form">
+            <label for="telefone">Telefone (com DDD, só números):</label>
+            <input type="tel" id="telefone" name="telefone" required>
+
+            <label for="cep">CEP (só números):</label>
+            <input type="text" id="cep" name="cep" required>
+
+            <label for="estado">Estado (Sigla, ex: SP):</label>
+            <input type="text" id="estado" name="estado" required>
+
+            <button type="submit">Finalizar Cadastro</button>
+            <p id="error-message" class="erros"></p>
+        </form>
+
+        <div class="register-link">
+            <p><a href="/login.html">Voltar para o Login</a></p>
+        </div>
+    </div>
+    <script src="/auth.js"></script>
+</body>
+
+</html>

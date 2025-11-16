@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Votação</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="overlay"></div>
+
+    <div class="header">
+        <h3 id="user-name-display">Olá!</h3>
+        <a href="#" id="logout-btn">Sair</a>
+    </div>
+
+    <div class="card with-header" style="max-width: 700px;">
+        <h2>Vote no seu time</h2>
+
+        <div id="buttons-container" class="buttons-grid">
+            <button onclick="votar('Corinthians')" style="background:#000">Corinthians</button>
+            <button onclick="votar('Palmeiras')" style="background:#006437">Palmeiras</button>
+            <button onclick="votar('São Paulo')" style="background:#da1414">São Paulo</button>
+            <button onclick="votar('Santos')" style="background:#fff; color:#000; border:1px solid #000">Santos</button>
+        </div>
+
+        <div id="voted-message" class="voted-message" style="display:none;">
+            <h3 style="color:#ffc107">Obrigado pelo seu voto!</h3>
+        </div>
+
+        <div style="margin-top: 30px; background: white; padding: 10px; border-radius: 10px;">
+            <canvas id="chartVotos"></canvas>
+        </div>
+    </div>
+
+    <script src="/vote-app.js"></script>
+</body>
+
+</html>

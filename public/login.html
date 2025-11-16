@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <div class="card">
+        <h2>Login</h2>
+
+        <form id="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Entrar</button>
+
+            <p id="error-message" class="erros"></p>
+        </form>
+
+        <div class="register-link">
+            <p>Não tem uma conta? <a href="/register-1.html">Registre-se aqui</a></p>
+        </div>
+    </div>
+
+    <script src="/auth.js"></script>
+</body>
+
+</html>

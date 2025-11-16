@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <div class="card with-header">
+        <div class="header">
+            <h3 id="user-name-display">Olá!</h3>
+            <a href="#" id="logout-btn">Sair</a>
+        </div>
+
+        <div id="quiz-container">
+            <div class="info">
+                <span id="score-display">Pontos: 0</span>
+                <span id="question-count">Pergunta 1 de 5</span>
+            </div>
+
+            <h4 class="pergunta" id="question-text">Carregando...</h4>
+            <div id="options-container"></div>
+
+            <p id="feedback-msg" class="mensagem" style="display:none;"></p>
+            <button id="next-btn" style="display:none;">Próxima &rarr;</button>
+        </div>
+    </div>
+    <script src="/quiz-app.js"></script>
+</body>
+
+</html>
