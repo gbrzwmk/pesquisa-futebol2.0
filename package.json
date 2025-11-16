@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "description": "Projeto de faculdade com login, quiz e votação.",
+    "type": "module",
     "scripts": {
         "dev": "vercel dev"
     },
