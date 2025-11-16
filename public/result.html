@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Fim de Jogo</title>
+    <title>Quiz Concluído!</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 
@@ -15,25 +15,31 @@
             <a href="#" id="logout-btn">Sair</a>
         </div>
 
-        <h1>FIM DE JOGO!</h1>
-        <h3>Sua pontuação final foi:</h3>
-        <h1 id="final-score">0 de 5</h1>
+        <div class="card-content" style="padding: 0 40px 40px 40px;">
+            <h2>Quiz Concluído!</h2>
+            <h3>Sua pontuação final foi:</h3>
+            <h1 id="final-score">0 de 15</h1>
 
-        <div class="register-link">
-            <a href="/vote.html">Avançar para a Votação</a>
+            <div class="nav-links" style="margin-top: 30px;">
+                <a href="/vote.html" style="background: #28a745; padding: 15px 25px; border-radius: 10px; text-decoration: none; color: white; font-weight: bold;">Avançar para a Votação</a>
+            </div>
+
+            <div class="register-link" style="margin-top: 20px;">
+                <a href="/leaderboard.html">Ver Ranking 🏆</a>
+            </div>
         </div>
     </div>
     <script>
         // Script simples para mostrar o placar e logout
         document.getElementById('final-score').innerText =
-            `${localStorage.getItem('quizScore') || 0} de 5`;
+            `${localStorage.getItem('quizScore') || 0} de 15`; // MUDANÇA AQUI
 
-        document.getElementById('user-name-display').innerText =
+        document.getElementById('congrats-header').innerText =
             `Parabéns, ${localStorage.getItem('userName') || 'Jogador'}!`;
 
         document.getElementById('logout-btn').addEventListener('click', () => {
             localStorage.clear();
-            window.location.href = '/';
+            window.location.href = '/login.html';
         });
     </script>
 </body>

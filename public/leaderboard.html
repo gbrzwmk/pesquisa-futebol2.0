@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ranking</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .leaderboard {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .leaderboard-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-radius: 8px;
+            background: #222;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            /* ANIMAÇÃO */
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        /* Efeito de escalonamento na animação */
+        
+        .leaderboard-row:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        
+        .leaderboard-row:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+        
+        .leaderboard-row:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+        
+        .leaderboard-row:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+        /* Destaques do Pódio */
+        
+        .leaderboard-row:nth-child(1) {
+            background: #ffc107;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .leaderboard-row:nth-child(2) {
+            background: #aaa;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .leaderboard-row:nth-child(3) {
+            background: #cd7f32;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .rank-name {
+            text-align: left;
+        }
+        
+        .rank-score {
+            font-weight: bold;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay"></div>
+
+    <div class="header">
+        <h3 id="user-name-display">Olá!</h3>
+        <a href="#" id="logout-btn">Sair</a>
+    </div>
+
+    <div class="card with-header">
+        <h2>🏆 Ranking 🏆</h2>
+        <div id="leaderboard-container">
+            <p>Carregando ranking...</p>
+        </div>
+        <div class="register-link" style="margin-top: 20px; display: flex; justify-content: space-around;">
+            <a href="/quiz.html">Voltar para o Quiz</a>
+            <a href="/vote.html">Ir para Votação</a>
+        </div>
+    </div>
+
+    <script>
+        // JS para o Ranking
+        const token = localStorage.getItem('authToken');
+        if (!token) window.location.href = '/login.html';
+
+        document.getElementById('user-name-display').innerText = `Olá, ${localStorage.getItem('userName') || 'Jogador'}!`;
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = '/login.html';
+        });
+
+        async function loadLeaderboard() {
+            const container = document.getElementById('leaderboard-container');
+            try {
+                const res = await fetch('/api/get-leaderboard', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!res.ok) throw new Error('Falha ao carregar');
+
+                const data = await res.json();
+
+                if (data.length === 0) {
+                    container.innerHTML = '<p>Ninguém jogou ainda. Seja o primeiro!</p>';
+                    return;
+                }
+
+                let html = '<div class="leaderboard">';
+                data.forEach((player, index) => {
+                    html += `
+                        <div class="leaderboard-row">
+                            <span class="rank-name">${index + 1}. ${player.nome}</span>
+                            <span class="rank-score">${player.quiz_score} Pts</span>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+
+            } catch (err) {
+                container.innerHTML = '<p>Erro ao carregar o ranking.</p>';
+            }
+        }
+        loadLeaderboard();
+    </script>
+</body>
+
+</html>

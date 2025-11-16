@@ -1,16 +1,17 @@
 const token = localStorage.getItem('authToken');
-if (!token) window.location.href = '/'; // Proteção: Se não logado, chuta pro login
+if (!token) window.location.href = '/login.html'; // Proteção: Se não logado, chuta pro login
 
 let currentQuestion = 1;
 let score = 0;
-const totalQuestions = 5;
+const totalQuestions = 15; // <<--- MUDANÇA AQUI (15 Perguntas)
 let isAnswering = false;
+let currentCorrectAnswer = ''; // Guarda a resposta certa
 
 // Configurações iniciais
 document.getElementById('user-name-display').innerText = `Olá, ${localStorage.getItem('userName')}!`;
 document.getElementById('logout-btn').addEventListener('click', () => {
     localStorage.clear();
-    window.location.href = '/';
+    window.location.href = '/login.html';
 });
 
 async function loadQuestion() {
@@ -26,23 +27,21 @@ async function loadQuestion() {
         });
 
         if (res.status === 401) { alert('Sessão expirada');
-            window.location.href = '/'; return; }
+            window.location.href = '/login.html'; return; }
 
         const data = await res.json();
 
         // Renderiza a pergunta
         document.getElementById('question-text').innerText = data.pergunta;
         document.getElementById('question-count').innerText = `Pergunta ${currentQuestion} de ${totalQuestions}`;
+        currentCorrectAnswer = data.respostaCorreta; // Salva a resposta
 
         // Renderiza as opções
         data.opcoes.forEach(opcao => {
             const btn = document.createElement('button');
             btn.innerText = opcao;
             btn.className = 'opcao'; // Classe do CSS
-            btn.style.marginTop = '10px';
-            btn.style.width = '100%';
-
-            btn.onclick = () => checkAnswer(opcao, data.respostaCorreta);
+            btn.onclick = () => checkAnswer(opcao);
             document.getElementById('options-container').appendChild(btn);
         });
 
@@ -51,20 +50,20 @@ async function loadQuestion() {
     }
 }
 
-function checkAnswer(selected, correct) {
+function checkAnswer(selected) {
     if (!isAnswering) return; // Evita duplo clique
     isAnswering = false;
 
     const feedbackEl = document.getElementById('feedback-msg');
     feedbackEl.style.display = 'block';
 
-    if (selected === correct) {
+    if (selected === currentCorrectAnswer) {
         score++;
         document.getElementById('score-display').innerText = `Pontos: ${score}`;
         feedbackEl.innerText = "RESPOSTA CORRETA!";
         feedbackEl.className = "mensagem correta"; // CSS verde
     } else {
-        feedbackEl.innerText = `QUE PENA! A resposta era: ${correct}`;
+        feedbackEl.innerText = `QUE PENA! A resposta era: ${currentCorrectAnswer}`;
         feedbackEl.className = "mensagem errada"; // CSS vermelho
     }
 
