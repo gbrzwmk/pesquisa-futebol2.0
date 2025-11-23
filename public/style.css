@@ -1,4 +1,4 @@
-/* public/style.css - Versão Corrigida: Desktop e Mobile Estáveis */
+/* public/style.css - Versão Corrigida (Layout e Gráfico) */
 
 :root {
     --primary: #ffc107;
@@ -9,8 +9,6 @@
     --text-muted: #cccccc;
     --error: #dc3545;
     --success: #198754;
-    --header-height: 70px;
-    /* Variável para controlar altura do header */
 }
 
 * {
@@ -27,24 +25,14 @@ body {
     background-position: center;
     background-attachment: fixed;
     min-height: 100vh;
-    /* Flexbox para centralizar no Desktop por padrão */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    padding-top: calc(var(--header-height) + 20px);
-    /* Espaço para não cortar o header */
-}
-
-
-/* Ajuste específico para a Landing Page (Home) */
-
-body.landing-page {
-    display: block;
-    padding: 0;
     overflow-x: hidden;
+    /* Impede rolagem lateral */
 }
+
+
+/* Overlay fixo no fundo */
 
 .overlay {
     position: fixed;
@@ -57,334 +45,115 @@ body.landing-page {
 }
 
 
-/* --- HEADER (Barra Superior) --- */
-
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: var(--header-height);
-    padding: 0 40px;
-    background: rgba(0, 0, 0, 0.95);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid var(--primary);
-    z-index: 1000;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-.header h3 {
-    font-size: 1.1rem;
-    margin: 0;
-    color: #eee;
-}
-
-.header a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-
-/* --- CARDS (Onde fica o conteúdo) --- */
-
-.card {
-    position: relative;
-    width: 100%;
-    max-width: 500px;
-    padding: 40px;
-    background: var(--card-bg);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-    text-align: center;
-    animation: fadeIn 0.5s ease-out;
-    /* Removemos margens manuais para deixar o Flexbox do body cuidar disso */
-    margin: 0 auto;
-}
-
-
-/* Cards maiores para Quiz e Votação */
-
-.card.quiz,
-.card.vote {
-    max-width: 800px;
-}
-
-
-/* Remove margem extra se tiver header, pois o body já tem padding-top */
-
-.card.with-header {
-    margin-top: 0;
-}
-
-
-/* --- COMPONENTES --- */
-
-h1 {
-    color: var(--primary);
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-
-h2 {
-    color: #eee;
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-}
-
-p {
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    width: 100%;
-}
-
-label {
-    font-weight: bold;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-    color: #ccc;
-}
-
-input {
-    width: 100%;
-    padding: 14px;
-    background: #222;
-    border: 1px solid #444;
-    border-radius: 8px;
-    color: white;
-    margin-bottom: 15px;
-    outline: none;
-    font-size: 16px;
-}
-
-input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
-}
-
-button {
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 8px;
-    background: var(--primary);
-    color: #000;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: transform 0.2s, background 0.2s;
-}
-
-button:hover {
-    background: var(--primary-hover);
-    transform: translateY(-2px);
-}
-
-button:active {
-    transform: scale(0.98);
-}
-
-
-/* --- QUIZ --- */
-
-.info {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    margin-bottom: 20px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    border: 1px solid #333;
-}
-
-h4.pergunta {
-    font-size: 1.4rem;
-    margin: 20px 0;
-    min-height: 60px;
-    line-height: 1.4;
-}
-
-.opcao {
-    background: #2c3e50;
-    color: white;
-    text-align: left;
-    margin-bottom: 10px;
-    border: 1px solid #444;
-    transition: all 0.2s;
-}
-
-.opcao:hover {
-    background: #34495e;
-    border-color: #666;
-}
-
-.opcao.certa-anim {
-    background: var(--success) !important;
-    border-color: #2ecc71;
-    transform: scale(1.02);
-}
-
-.opcao.errada-anim {
-    background: var(--error) !important;
-    opacity: 0.8;
-}
-
-
-/* --- VOTAÇÃO (Grid arrumado) --- */
-
-.g12-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* 4 colunas no Desktop */
-    gap: 12px;
-    margin: 20px 0;
-}
-
-.vote-btn {
-    padding: 15px 5px;
-    font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border-radius: 8px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-    transition: transform 0.2s, box-shadow 0.2s;
-    min-height: 100px;
-}
-
-.vote-btn:hover {
-    transform: translateY(-3px);
-    z-index: 5;
-}
-
-.vote-icon {
-    font-size: 2rem;
-    margin-bottom: 5px;
-}
-
-
-/* Cores dos Times (Mantidas) */
-
-.time-cor {
-    border: 1px solid #fff;
-    background: linear-gradient(145deg, #222, #000);
-}
-
-.time-pal {
-    border: 1px solid #00ff88;
-    background: linear-gradient(145deg, #006437, #004d2a);
-}
-
-.time-sp {
-    border: 1px solid #ff6b6b;
-    background: linear-gradient(145deg, #333, #000);
-}
-
-.time-san {
-    border: 1px solid #ccc;
-    background: #fff;
-    color: #000 !important;
-}
-
-.time-fla {
-    border: 1px solid #ff0000;
-    background: linear-gradient(145deg, #000, #8b0000);
-}
-
-.time-vas {
-    border: 1px solid #fff;
-    background: linear-gradient(145deg, #000, #222);
-}
-
-.time-flu {
-    border: 1px solid #00913f;
-    background: linear-gradient(145deg, #8b0000, #004d2a);
-}
-
-.time-bot {
-    border: 1px solid #fff;
-    background: #000;
-}
-
-.time-cam {
-    border: 1px solid #fff;
-    background: #000;
-}
-
-.time-cru {
-    border: 1px solid #0066ff;
-    background: #003399;
-}
-
-.time-gre {
-    border: 1px solid #00ccff;
-    background: #000;
-}
-
-.time-int {
-    border: 1px solid #ff0000;
-    background: #cc0000;
-}
-
-.chart-container {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    margin-top: 30px;
-    height: 500px;
-    width: 100%;
-}
-
-
-/* --- LANDING PAGE --- */
+/* --- NAV / HEADER --- */
 
 .landing-nav {
     display: flex;
     justify-content: space-between;
-    padding: 20px 40px;
-    position: absolute;
-    top: 0;
+    align-items: center;
+    padding: 20px 5% !important;
+    /* Margem lateral segura */
     width: 100%;
+    position: relative;
+    /* Mudado de absolute para relative para não bugar */
     z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Alinha emoji e texto */
 }
 
+
+/* --- HERO SECTION (Título e Botões) --- */
+
 .hero-section {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 20px;
+    padding: 60px 20px;
+    flex-grow: 1;
+    /* Ocupa o espaço disponível */
+}
+
+.hero-content {
+    max-width: 800px;
+    /* Limita a largura para não esticar */
+    margin: 0 auto;
 }
 
 .hero-content h1 {
-    font-size: 4rem;
+    font-size: 3.5rem;
     line-height: 1.1;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: #ddd;
+    margin-bottom: 40px;
+}
+
+
+/* --- COMO FUNCIONA (Correção do Layout Quebrado) --- */
+
+.how-it-works {
+    padding: 60px 20px;
+    background: rgba(0, 0, 0, 0.9);
+    /* Fundo escuro para leitura */
+    text-align: center;
+    width: 100%;
+}
+
+.steps-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite quebrar linha no mobile */
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    max-width: 1200px;
+    /* Limita largura máxima */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.step-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 16px;
+    width: 300px;
+    /* Largura fixa para não espremer */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.step-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.step-title {
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+
+/* --- BOTÕES --- */
 
 .btn-cta-large {
     background: var(--primary);
@@ -395,7 +164,7 @@ h4.pergunta {
     font-weight: bold;
     font-size: 1.2rem;
     display: inline-block;
-    margin-bottom: 10px;
+    margin: 10px;
 }
 
 .btn-secondary {
@@ -407,20 +176,185 @@ h4.pergunta {
     font-weight: bold;
     font-size: 1.2rem;
     display: inline-block;
-    margin-left: 10px;
+    margin: 10px;
+}
+
+.btn-cta-small {
+    background: var(--primary);
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-text {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
 }
 
 
-/* --- UTILITÁRIOS (Toast, Spinner, etc.) --- */
+/* --- COMPONENTES GERAIS --- */
+
+.card {
+    width: 95%;
+    max-width: 500px;
+    padding: 30px;
+    margin: 40px auto;
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.card.quiz,
+.card.vote {
+    max-width: 800px;
+}
+
+.card.with-header {
+    margin-top: 20px;
+}
+
+
+/* Ajuste para não sobrepor header fixo */
+
+
+/* Header Interno (Quiz/Vote) */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.95);
+    border-bottom: 2px solid var(--primary);
+    margin-bottom: 20px;
+}
+
+.header h3,
+.header a {
+    color: #eee;
+    text-decoration: none;
+}
+
+.header a {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+
+/* Inputs e Forms */
+
+input {
+    width: 100%;
+    padding: 12px;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: var(--primary);
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* --- VOTAÇÃO (Grid) --- */
+
+.g12-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.vote-btn {
+    padding: 15px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+}
+
+.vote-icon {
+    font-size: 2rem;
+}
+
+
+/* Container do Gráfico */
+
+.chart-container {
+    background: white;
+    /* Fundo branco pro gráfico */
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 30px;
+    height: auto;
+    min-height: 500px;
+}
+
+
+/* --- RANKING --- */
+
+.leaderboard-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #222;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+.leaderboard-row:nth-child(1) {
+    background: var(--primary);
+    color: black;
+    font-weight: bold;
+}
+
+
+/* --- RESPONSIVIDADE (Celular) --- */
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .g12-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    /* 2 colunas no celular */
+    .landing-nav {
+        padding: 15px 20px;
+    }
+    .steps-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .step-card {
+        width: 100%;
+    }
+}
+
+
+/* Utilitários */
 
 .erros {
     color: #ff6b6b;
-    background: rgba(220, 53, 69, 0.1);
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 15px;
     display: none;
-    font-size: 0.9rem;
+    margin-top: 10px;
 }
 
 .loader-container {
@@ -447,19 +381,23 @@ h4.pergunta {
 }
 
 .loader-text {
-    margin-top: 15px;
+    margin-top: 10px;
     color: var(--primary);
-    font-weight: bold;
 }
 
-.toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 10000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.toast
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

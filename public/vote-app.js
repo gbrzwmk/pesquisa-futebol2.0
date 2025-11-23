@@ -1,4 +1,3 @@
-// public/vote-app.js
 const token = localStorage.getItem('authToken');
 if (!token) window.location.href = '/login.html';
 
@@ -25,14 +24,13 @@ const votedMessage = document.getElementById('voted-message');
 const chartContainer = document.getElementById('chartVotos');
 
 async function loadData() {
-    showLoading(); // Mostra spinner ao abrir a página
+    showLoading();
     try {
         const res = await fetch('/api/get-votes', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
-
-        hideLoading(); // Esconde spinner
+        hideLoading();
 
         renderChart(data.totais);
 
@@ -50,90 +48,75 @@ async function loadData() {
 }
 
 function renderChart(votos) {
-    const ctx = document.getElementById('chartVotos').getContext('2d');
+    const ctx = chartContainer.getContext('2d');
 
-    // Ordenar os times do maior para o menor
     const sortedTeams = Object.entries(votos).sort((a, b) => b[1] - a[1]);
     const labels = sortedTeams.map(item => item[0]);
     const dataValues = sortedTeams.map(item => item[1]);
 
-    // Cores mapeadas
+    // Cores dos times
     const teamColors = {
-        "Corinthians": "#ffffff",
+        "Corinthians": "#000000",
         "Palmeiras": "#006437",
         "São Paulo": "#ff0000",
         "Santos": "#000000",
         "Flamengo": "#c3281e",
-        "Vasco": "#ffffff",
+        "Vasco": "#000000",
         "Fluminense": "#9f0220",
-        "Botafogo": "#ffffff",
-        "Atlético-MG": "#ffffff",
+        "Botafogo": "#000000",
+        "Atlético-MG": "#000000",
         "Cruzeiro": "#0053a0",
         "Grêmio": "#0d80bf",
         "Internacional": "#e20e0e"
     };
-    // Se o time não tiver cor definida, usa cinza
-    const bgColors = labels.map(team => teamColors[team] || '#777');
-    // Bordas brancas para destacar no fundo escuro
-    const borderColors = labels.map(() => '#ffffff');
+    const bgColors = labels.map(team => teamColors[team] || '#555');
 
     chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Pontos de Torcida',
+                label: 'Pontos',
                 data: dataValues,
                 backgroundColor: bgColors,
-                borderColor: borderColors, // Borda branca em todos
-                borderWidth: 1,
-                borderRadius: 4,
-                barThickness: 25,
+                borderWidth: 1
             }]
         },
         options: {
-            indexAxis: 'y', // Gráfico Horizontal
+            indexAxis: 'y', // GRÁFICO HORIZONTAL
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: 'Voto Computado!',
-                    color: '#ffffff',
-                    font: { size: 20, weight: 'bold' },
-                    padding: { bottom: 5 }
-                },
-                subtitle: {
-                    display: true,
-                    text: 'Seu conhecimento de futebol ajudou seu time.',
-                    color: '#cccccc',
-                    font: { size: 14 },
-                    padding: { bottom: 20 }
+                    text: 'RANKING DA TORCIDA',
+                    color: '#000000', // Título PRETO
+                    font: { size: 18, weight: 'bold' }
                 }
             },
             scales: {
                 x: {
                     beginAtZero: true,
-                    grid: { color: 'rgba(255, 255, 255, 0.2)' }, // Linhas da grade mais claras
-                    ticks: { color: '#cccccc' }
+                    ticks: { color: '#000000' }, // Texto eixo X PRETO
+                    grid: { color: '#ddd' }
                 },
                 y: {
-                    grid: { display: false },
                     ticks: {
-                        color: '#ffffff', // <--- AQUI ESTA A CORREÇÃO (BRANCO)
-                        font: { size: 14, weight: 'bold' }
-                    }
+                        color: '#000000', // NOMES DOS TIMES EM PRETO (AQUI ESTAVA O ERRO)
+                        font: { size: 12, weight: 'bold' }
+                    },
+                    grid: { display: false }
                 }
             }
         }
     });
-
-    // Ajusta a altura do gráfico
-    document.getElementById('chartVotos').style.height = '600px';
+    // Força altura para caber todos os times
+    chartContainer.style.height = '500px';
 }
+
 async function votar(time) {
-    showLoading(); // Spinner enquanto vota
+    showLoading();
     try {
         const res = await fetch('/api/submit-vote', {
             method: 'POST',
@@ -163,12 +146,9 @@ async function votar(time) {
 async function updateChart() {
     const res = await fetch('/api/get-votes', { headers: { 'Authorization': `Bearer ${token}` } });
     const data = await res.json();
-    chart.data.datasets[0].data = [
-        data.totais['Corinthians'],
-        data.totais['Palmeiras'],
-        data.totais['São Paulo'],
-        data.totais['Santos']
-    ];
+    chart.data.datasets[0].data = Object.entries(data.totais)
+        .sort((a, b) => b[1] - a[1])
+        .map(item => item[1]);
     chart.update();
 }
 
