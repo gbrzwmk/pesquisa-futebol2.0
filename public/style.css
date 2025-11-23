@@ -482,3 +482,38 @@ button {
     /* Texto preto no botão amarelo */
     background: #ffc107;
 }
+
+
+/* --- CORREÇÃO FINAL: REMOVER LINKS ROXOS --- */
+
+
+/* 1. Links de Ação (Cadastrar, Entrar) -> Sempre Dourado */
+
+.register-link a,
+.register-link a:visited,
+.register-link a:active,
+.register-link a:hover {
+    color: #ffc107 !important;
+    /* Força o Amarelo */
+    text-decoration: none;
+}
+
+
+/* 2. Links Secundários (Esqueci senha, Privacidade) -> Cinza Claro */
+
+.forgot-password a,
+.forgot-password a:visited,
+.legal-small a,
+.legal-small a:visited {
+    color: #cccccc !important;
+    /* Força Cinza Claro */
+    text-decoration: none;
+}
+
+
+/* Quando passar o mouse nos secundários -> Fica Branco */
+
+.forgot-password a:hover,
+.legal-small a:hover {
+    color: #ffffff !important;
+}
