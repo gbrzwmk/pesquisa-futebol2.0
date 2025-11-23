@@ -640,3 +640,42 @@ button {
     margin-top: 40px;
     width: 100%;
 }
+
+
+/* --- BOTÃO HOME NO HEADER --- */
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Espaço entre a casa e o nome */
+}
+
+.home-btn {
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.home-btn:hover {
+    transform: scale(1.2);
+    /* Aumenta ao passar o mouse */
+    filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.5));
+}
+
+
+/* Ajuste para garantir que o nome continue bonito */
+
+#user-name-display {
+    font-size: 1rem;
+    color: #eee;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+#user-name-display:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}

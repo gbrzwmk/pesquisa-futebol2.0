@@ -11,7 +11,10 @@
     <div class="overlay"></div>
     <div class="card with-header">
         <div class="header">
-            <a href="/profile.html" id="user-name-display" style="text-decoration: none; color: #eee; font-size: 1.1em; font-weight: normal;">Olá!</a>
+            <div class="header-left">
+                <a href="/hub.html" class="home-btn" title="Voltar ao Início">🏠</a>
+                <a href="/profile.html" id="congrats-header">Parabéns!</a>
+            </div>
             <a href="#" id="logout-btn">Sair</a>
         </div>
 
@@ -29,10 +32,10 @@
             </div>
         </div>
     </div>
+    <script src="/utils.js"></script>
     <script>
-        // Script simples para mostrar o placar e logout
         document.getElementById('final-score').innerText =
-            `${localStorage.getItem('quizScore') || 0} de 15`; // MUDANÇA AQUI
+            `${localStorage.getItem('quizScore') || 0} de 15`;
 
         document.getElementById('congrats-header').innerText =
             `Parabéns, ${localStorage.getItem('userName') || 'Jogador'}!`;

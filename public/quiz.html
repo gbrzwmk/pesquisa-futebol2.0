@@ -10,7 +10,6 @@
             display: flex;
             justify-content: space-between;
             font-size: 1.2em;
-            /* Aumenta o tamanho do texto */
             font-weight: bold;
             margin: 20px 0;
             padding: 10px;
@@ -20,7 +19,6 @@
         
         h4.pergunta {
             font-size: 1.5em;
-            /* Aumenta o tamanho da pergunta */
             margin: 30px 0;
             min-height: 50px;
         }
@@ -32,7 +30,6 @@
             padding: 15px;
             margin: 10px 0;
             font-size: 1.2em;
-            /* Aumenta o texto da opção */
             font-weight: bold;
             cursor: pointer;
             color: white;
@@ -52,9 +49,7 @@
             padding: 15px;
             border-radius: 10px;
             font-size: 1.2em;
-            /* Aumenta o texto da resposta */
             text-align: center;
-            /* Centraliza a resposta */
         }
         
         .correta {
@@ -79,7 +74,6 @@
             border-radius: 10px;
             transition: background 0.3s;
             display: inline-block;
-            /* Garante que o botão apareça */
             margin-top: 10px;
         }
     </style>
@@ -89,14 +83,17 @@
     <div class="overlay"></div>
     <div class="card with-header">
         <div class="header">
-            <a href="/profile.html" id="user-name-display" style="text-decoration: none; color: #eee; font-size: 1.1em; font-weight: normal;">Olá!</a>
+            <div class="header-left">
+                <a href="/hub.html" class="home-btn" title="Voltar ao Início">🏠</a>
+                <a href="/profile.html" id="user-name-display">Olá!</a>
+            </div>
             <a href="#" id="logout-btn">Sair</a>
         </div>
 
         <div id="quiz-container" style="padding: 0 30px 30px 30px;">
             <div class="info">
                 <span id="score-display">Pontos: 0</span>
-                <span id="question-count">Pergunta 1 de 5</span>
+                <span id="question-count">Pergunta 1 de 15</span>
             </div>
 
             <h4 class="pergunta" id="question-text">Carregando...</h4>

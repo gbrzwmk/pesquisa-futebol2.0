@@ -24,7 +24,7 @@
             transform: translateX(-20px);
             animation: slideIn 0.5s ease-out forwards;
         }
-        /* Efeito de escalonamento na animação */
+        /* Efeito de escalonamento */
         
         .leaderboard-row:nth-child(2) {
             animation-delay: 0.1s;
@@ -86,7 +86,10 @@
     <div class="overlay"></div>
 
     <div class="header">
-        <a href="/profile.html" id="user-name-display" style="text-decoration: none; color: #eee; font-size: 1.1em; font-weight: normal;">Olá!</a>
+        <div class="header-left">
+            <a href="/hub.html" class="home-btn" title="Voltar ao Início">🏠</a>
+            <a href="/profile.html" id="user-name-display">Olá!</a>
+        </div>
         <a href="#" id="logout-btn">Sair</a>
     </div>
 
@@ -101,8 +104,9 @@
         </div>
     </div>
 
+    <script src="/utils.js"></script>
     <script>
-        // JS para o Ranking
+        // JS para o Ranking (Inline para facilitar)
         const token = localStorage.getItem('authToken');
         if (!token) window.location.href = '/login.html';
 
