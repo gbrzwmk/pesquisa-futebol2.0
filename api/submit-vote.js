@@ -20,8 +20,13 @@ export default async function handler(request, response) {
     `;
 
         // Lógica: Voto Base (1) + Pontos do Quiz. 
-        // Se ele acertou 15, o voto vale 16. Se não jogou (-1), vale 1.
-        let score = userRows[0] ? .quiz_score || 0;
+        let score = 0;
+
+        // Verifica se encontrou o usuário E se ele tem pontuação
+        if (userRows.length > 0 && userRows[0].quiz_score !== null) {
+            score = userRows[0].quiz_score;
+        }
+
         if (score < 0) score = 0;
         const pesoVoto = 1 + score;
 
