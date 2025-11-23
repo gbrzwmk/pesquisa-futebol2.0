@@ -115,3 +115,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// ... (Mantenha todo o código anterior) ...
+
+// ADICIONE ISTO NO FINAL DO ARQUIVO (FORA do DOMContentLoaded)
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const icon = input.nextElementSibling; // O span do ícone
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.innerText = "🙈"; // Macaco tapando olho (ou outro ícone)
+    } else {
+        input.type = "password";
+        icon.innerText = "👁️"; // Olho
+    }
+}

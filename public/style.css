@@ -1,7 +1,18 @@
-/* public/style.css - Versão Final Otimizada */
+/* public/style.css - Versão Final: Landing Page & UI Kit */
 
 
-/* --- 1. GERAL --- */
+/* --- 1. GERAL & VARIÁVEIS --- */
+
+:root {
+    --primary: #ffc107;
+    --primary-hover: #e0a800;
+    --dark-bg: #121212;
+    --card-bg: rgba(20, 20, 20, 0.95);
+    --text-main: #ffffff;
+    --text-muted: #cccccc;
+    --error: #dc3545;
+    --success: #198754;
+}
 
 * {
     box-sizing: border-box;
@@ -10,9 +21,8 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Fonte mais moderna */
-    color: white;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-main);
     background-image: url('/fundo.jpg');
     background-size: cover;
     background-position: center;
@@ -21,13 +31,16 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
     overflow-x: hidden;
-    /* Evita rolagem lateral no celular */
 }
 
 
-/* --- 2. OVERLAY E CARDS --- */
+/* Ajuste específico para a Landing Page ocupar a tela toda sem centralizar */
+
+body.landing-page {
+    display: block;
+    overflow-y: auto;
+}
 
 .overlay {
     position: fixed;
@@ -35,26 +48,143 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    /* Um pouco mais escuro para contraste */
-    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.85);
+    /* Mais escuro para elegância */
+    z-index: -1;
 }
+
+
+/* --- 2. LANDING PAGE ESTILOS --- */
+
+.landing-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.btn-text {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+.btn-cta-small {
+    background: var(--primary);
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.btn-cta-small:hover {
+    transform: scale(1.05);
+}
+
+.hero-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    background: linear-gradient(to right, #fff, #aaa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin-bottom: 40px;
+}
+
+.btn-cta-large {
+    background: var(--primary);
+    color: #000;
+    padding: 15px 40px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.3);
+}
+
+.btn-cta-large:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 0 30px rgba(255, 193, 7, 0.5);
+}
+
+.btn-secondary {
+    color: white;
+    border: 2px solid white;
+    padding: 13px 35px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-left: 15px;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: black;
+}
+
+.landing-footer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 0.9rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-links a {
+    color: #888;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+
+/* --- 3. CARDS E FORMULÁRIOS --- */
 
 .card {
     position: relative;
-    z-index: 2;
     width: 100%;
-    max-width: 500px;
-    padding: 30px;
-    background: rgba(20, 20, 20, 0.95);
-    /* Quase preto sólido para leitura */
+    max-width: 450px;
+    padding: 40px;
+    margin: 20px;
+    background: var(--card-bg);
     border-radius: 16px;
-    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     text-align: center;
-    animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    /* Animação suave */
+    animation: fadeIn 0.6s ease-out;
 }
 
 .card.quiz,
@@ -66,8 +196,162 @@ body {
     margin-top: 80px;
 }
 
+.brand-logo {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
 
-/* --- 3. HEADER --- */
+
+/* Inputs Melhorados */
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    background: #222;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: var(--primary);
+    background: #111;
+}
+
+
+/* Visualizar Senha */
+
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: 5px;
+    font-size: 0.85rem;
+}
+
+.forgot-password a {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    color: white;
+}
+
+
+/* Botões */
+
+button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary);
+    color: #000;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+
+/* Login Social */
+
+.divider {
+    margin: 20px 0;
+    position: relative;
+}
+
+.divider span {
+    background: #141414;
+    padding: 0 10px;
+    color: #666;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #333;
+    z-index: 0;
+}
+
+.btn-social {
+    background: white;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+}
+
+.btn-social:hover {
+    background: #f0f0f0;
+}
+
+.google-icon {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #4285F4;
+    font-size: 1.2rem;
+}
+
+.legal-small {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.legal-small a {
+    color: #777;
+    text-decoration: none;
+}
+
+
+/* --- 4. OUTROS COMPONENTES (Quiz, Vote, Header, etc. mantidos) --- */
 
 .header {
     position: fixed;
@@ -79,163 +363,21 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #ffc107;
-    z-index: 10;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid var(--primary);
+    z-index: 100;
 }
 
 .header h3,
 .header a {
-    font-size: 1rem;
     color: #eee;
+    font-size: 1rem;
+    text-decoration: none;
 }
 
 .header a {
-    color: #ffc107;
-    text-decoration: none;
+    color: var(--primary);
     font-weight: bold;
 }
-
-
-/* --- 4. COMPONENTES --- */
-
-h1 {
-    color: #ffc107;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-
-h2 {
-    color: #eee;
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-}
-
-input {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 15px;
-    background: #333;
-    border: 2px solid #444;
-    border-radius: 8px;
-    color: white;
-    font-size: 1rem;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-input:focus {
-    border-color: #ffc107;
-    background: #222;
-}
-
-label {
-    display: block;
-    text-align: left;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #ccc;
-}
-
-button {
-    width: 100%;
-    padding: 16px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    background: #ffc107;
-    color: #111;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.2s;
-    margin-top: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-button:active {
-    transform: scale(0.98);
-}
-
-
-/* --- 5. QUIZ --- */
-
-.opcao {
-    background: #2c3e50;
-    color: white;
-    text-align: left;
-    border: 2px solid transparent;
-    margin-bottom: 12px;
-}
-
-
-/* Feedback Visual */
-
-.opcao.certa-anim {
-    background: #198754 !important;
-    border-color: #28a745;
-    box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
-    transform: scale(1.02);
-}
-
-.opcao.errada-anim {
-    background: #dc3545 !important;
-    opacity: 0.6;
-}
-
-
-/* --- 6. VOTAÇÃO --- */
-
-.buttons-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.vote-btn {
-    padding: 20px;
-    font-size: 1.1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.vote-icon {
-    font-size: 2rem;
-}
-
-
-/* Cores dos Times */
-
-#Corinthians {
-    background: linear-gradient(145deg, #222, #000);
-    border: 1px solid #444;
-    color: white;
-}
-
-#Palmeiras {
-    background: linear-gradient(145deg, #006437, #004d2a);
-    border: 1px solid #00ff88;
-    color: white;
-}
-
-#SãoPaulo {
-    background: linear-gradient(145deg, #da1414, #b30000);
-    border: 1px solid #ff6b6b;
-    color: white;
-}
-
-#Santos {
-    background: linear-gradient(145deg, #fff, #eee);
-    border: 1px solid #ccc;
-    color: black;
-}
-
-
-/* --- 7. SPINNER DE LOADING --- */
 
 .loader-container {
     position: fixed;
@@ -243,7 +385,7 @@ button:active {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     z-index: 9999;
     display: none;
     align-items: center;
@@ -252,18 +394,69 @@ button:active {
 }
 
 .spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid #333;
-    border-top: 5px solid #ffc107;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #333;
+    border-top: 4px solid var(--primary);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
 
 .loader-text {
     margin-top: 15px;
+    color: var(--primary);
     font-weight: bold;
-    color: #ffc107;
+}
+
+.erros {
+    color: #ff6b6b;
+    background: rgba(220, 53, 69, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.mensagem {
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.correta {
+    background: rgba(25, 135, 84, 0.2);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+}
+
+.errada {
+    background: rgba(220, 53, 69, 0.2);
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+}
+
+
+/* --- 5. RESPONSIVIDADE --- */
+
+@media (max-width: 600px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .landing-nav {
+        padding: 15px 20px;
+    }
+    .card {
+        padding: 25px;
+        margin-top: 20px;
+    }
+    .card.with-header {
+        margin-top: 80px;
+    }
+    .buttons-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @keyframes spin {
@@ -283,42 +476,5 @@ button:active {
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-
-/* --- 8. RESPONSIVIDADE (CELULAR) --- */
-
-@media (max-width: 600px) {
-    body {
-        align-items: flex-start;
-        padding: 10px;
-    }
-    /* Topo no celular */
-    .card {
-        padding: 20px;
-        margin-top: 85px !important;
-    }
-    /* Ajuste para header fixo */
-    .header {
-        padding: 12px;
-    }
-    h1 {
-        font-size: 1.8rem;
-    }
-    h2 {
-        font-size: 1.4rem;
-    }
-    .buttons-grid {
-        grid-template-columns: 1fr;
-    }
-    /* Botões empilhados no celular */
-    .vote-btn {
-        flex-direction: row;
-        justify-content: flex-start;
-        padding: 15px;
-    }
-    .chart-container {
-        padding: 10px;
     }
 }

@@ -1,13 +1,8 @@
 {
     "version": 2,
-    "builds": [{
-            "src": "api/**/*.js",
-            "use": "@vercel/node"
-        },
-        {
-            "src": "public/**/*",
-            "use": "@vercel/static"
-        }
+    "builds": [
+        { "src": "api/**/*.js", "use": "@vercel/node" },
+        { "src": "public/**/*", "use": "@vercel/static" }
     ],
     "routes": [
         { "src": "/api/login", "dest": "/api/login.js" },
@@ -19,6 +14,7 @@
         { "src": "/api/submit-vote", "dest": "/api/submit-vote.js" },
         { "src": "/api/update-name", "dest": "/api/update-name.js" },
 
+        { "src": "/login", "dest": "/public/login.html" },
         { "src": "/quiz", "dest": "/public/quiz.html" },
         { "src": "/votacao", "dest": "/public/vote.html" },
         { "src": "/ranking", "dest": "/public/leaderboard.html" },
@@ -27,8 +23,9 @@
         { "src": "/registrar-1", "dest": "/public/register-1.html" },
         { "src": "/registrar-2", "dest": "/public/register-2.html" },
         { "src": "/registrar-3", "dest": "/public/register-3.html" },
+        { "src": "/privacidade", "dest": "/public/privacy.html" },
 
-        { "src": "/", "dest": "/public/login.html" },
+        { "src": "/", "dest": "/public/index.html" },
         { "src": "/(.*)", "dest": "/public/$1" }
     ]
 }

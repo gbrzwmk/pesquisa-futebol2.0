@@ -3,29 +3,52 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pesquisa de Futebol</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
     <div class="overlay"></div>
     <div class="card">
-        <h2>Login</h2>
+        <div class="brand-logo">⚽</div>
+        <h2>Bem-vindo de volta!</h2>
+        <p style="color: #ccc; margin-bottom: 20px;">Entre para continuar votando.</p>
 
         <form id="login-form">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <div class="input-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            </div>
 
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required>
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" placeholder="Sua senha" required>
+                    <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+                </div>
+                <div class="forgot-password">
+                    <a href="#" onclick="alert('Funcionalidade em breve!')">Esqueci minha senha</a>
+                </div>
+            </div>
 
             <button type="submit">Entrar</button>
+
+            <div class="divider"><span>ou</span></div>
+
+            <button type="button" class="btn-social" onclick="alert('Login com Google em breve!')">
+                <span class="google-icon">G</span> Entrar com Google
+            </button>
 
             <p id="error-message" class="erros"></p>
         </form>
 
         <div class="register-link">
-            <p>Não tem uma conta? <a href="/register-1.html">Registre-se aqui</a></p>
+            <p>Não tem conta? <a href="/registrar-1">Crie grátis agora</a></p>
+        </div>
+
+        <div class="legal-small">
+            <a href="/privacidade">Privacidade</a> &bull; <a href="/privacidade">Termos</a>
         </div>
     </div>
 
