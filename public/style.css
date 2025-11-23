@@ -1,4 +1,4 @@
-/* public/style.css - Versão Final: Acessibilidade, UX e Toasts */
+/* public/style.css - Versão Final: Mobile First & Responsivo */
 
 :root {
     --primary: #ffc107;
@@ -26,14 +26,17 @@ body {
     background-attachment: fixed;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    /* Mudança: Alinha ao topo para permitir scroll no mobile */
     min-height: 100vh;
+    padding: 20px;
     overflow-x: hidden;
 }
 
 body.landing-page {
     display: block;
     overflow-y: auto;
+    padding: 0;
 }
 
 .overlay {
@@ -47,283 +50,98 @@ body.landing-page {
 }
 
 
-/* --- ACESSIBILIDADE (Foco no Teclado) --- */
+/* --- HEADER (Barra Superior) --- */
 
-button:focus-visible,
-a:focus-visible,
-input:focus-visible {
-    outline: 3px solid var(--primary);
-    outline-offset: 2px;
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.98);
+    /* Mais opaco no mobile */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--primary);
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.header h3 {
+    font-size: 1rem;
+    margin: 0;
+    color: #eee;
+    max-width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 
-/* --- COMPONENTES DE UI --- */
+/* --- CARDS --- */
 
 .card {
     position: relative;
     width: 100%;
-    max-width: 450px;
-    padding: 40px;
-    margin: 20px auto;
+    max-width: 500px;
+    padding: 30px;
+    margin: 100px auto 40px auto;
+    /* Margem topo grande p/ não ficar embaixo do header */
     background: var(--card-bg);
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     text-align: center;
     animation: fadeIn 0.6s ease-out;
 }
 
 .card.quiz,
 .card.vote {
-    max-width: 700px;
-}
-
-.card.with-header {
-    margin-top: 100px;
+    max-width: 800px;
 }
 
 
-/* --- TOAST NOTIFICATIONS (Substitui o Alert) --- */
+/* --- TIPOGRAFIA --- */
 
-.toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 10000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.toast {
-    background: var(--card-bg);
-    color: white;
-    padding: 15px 25px;
-    border-radius: 8px;
-    border-left: 5px solid var(--primary);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    animation: slideInRight 0.3s ease-out;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 250px;
-}
-
-.toast.success {
-    border-left-color: var(--success);
-}
-
-.toast.error {
-    border-left-color: var(--error);
-}
-
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-
-/* --- LANDING PAGE & COMO FUNCIONA --- */
-
-.landing-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+h1 {
+    font-size: 2.5rem;
     color: var(--primary);
-}
-
-.btn-text {
-    color: white;
-    text-decoration: none;
-    margin-right: 20px;
-    font-weight: bold;
-}
-
-.btn-cta-small {
-    background: var(--primary);
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 20px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: transform 0.2s;
-}
-
-.btn-cta-small:hover {
-    transform: scale(1.05);
-}
-
-.hero-section {
-    min-height: 90vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-}
-
-.hero-content h1 {
-    font-size: 4rem;
     margin-bottom: 20px;
-    line-height: 1.1;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
-
-.hero-content p {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    max-width: 600px;
-    margin-bottom: 40px;
-}
-
-.btn-cta-large {
-    background: var(--primary);
-    color: #000;
-    padding: 15px 40px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2rem;
-    transition: all 0.3s;
-    box-shadow: 0 0 20px rgba(255, 193, 7, 0.3);
-}
-
-.btn-cta-large:hover {
-    background: var(--primary-hover);
-    box-shadow: 0 0 30px rgba(255, 193, 7, 0.5);
-}
-
-.btn-secondary {
-    color: white;
-    border: 2px solid white;
-    padding: 13px 35px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-left: 15px;
-    transition: all 0.3s;
-}
-
-.btn-secondary:hover {
-    background: white;
-    color: black;
-}
-
-
-/* Seção Como Funciona */
-
-.how-it-works {
-    padding: 80px 20px;
-    background: rgba(0, 0, 0, 0.8);
-    text-align: center;
-}
-
-.steps-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.step-card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 30px;
-    border-radius: 16px;
-    width: 250px;
-    transition: transform 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.step-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--primary);
-}
-
-.step-icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    display: block;
-}
-
-.step-title {
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: var(--primary);
-    margin-bottom: 10px;
-    display: block;
-}
-
-
-/* Footer & Feedback */
-
-.landing-footer {
-    text-align: center;
-    padding: 40px 20px;
-    color: #666;
-    font-size: 0.9rem;
-    background: #0a0a0a;
-}
-
-.footer-links a {
-    color: #888;
-    text-decoration: none;
-    margin: 0 10px;
-}
-
-.feedback-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    padding: 10px 15px;
-    border-radius: 20px;
-    text-decoration: none;
-    font-size: 0.8rem;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: 0.3s;
-    z-index: 100;
-}
-
-.feedback-btn:hover {
-    background: var(--primary);
-    color: black;
-}
-
-
-/* --- RESTO DOS COMPONENTES (Inputs, Header, Etc.) --- */
-
-
-/* (Mantenha os estilos de input, button, header, quiz, vote, ranking do arquivo anterior aqui) */
-
-
-/* ... Copie a parte de Inputs, Buttons, Header, Quiz, Vote, Ranking do CSS anterior ... */
-
-
-/* Se tiver dúvida, mantenha o que você já tinha para baixo desta linha */
 
 h2 {
-    color: #ffc107;
+    font-size: 1.8rem;
+    color: #eee;
+    margin-bottom: 20px;
+}
+
+p {
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+
+/* --- FORMULÁRIOS --- */
+
+form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #ccc;
 }
 
 input {
@@ -335,6 +153,8 @@ input {
     color: white;
     margin-bottom: 15px;
     outline: none;
+    font-size: 16px;
+    /* Evita zoom no iPhone */
 }
 
 input:focus {
@@ -349,122 +169,87 @@ button {
     background: var(--primary);
     color: #000;
     font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
     margin-top: 10px;
+    transition: transform 0.1s;
 }
 
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px 20px;
-    background: rgba(0, 0, 0, 0.95);
+button:active {
+    transform: scale(0.98);
+}
+
+
+/* --- QUIZ --- */
+
+.info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid var(--primary);
-    z-index: 100;
-}
-
-.header a {
-    color: var(--primary);
-    text-decoration: none;
     font-weight: bold;
-}
-
-.erros {
-    color: #ff6b6b;
-    background: rgba(220, 53, 69, 0.1);
+    margin-bottom: 20px;
     padding: 10px;
-    border-radius: 5px;
-    margin-top: 15px;
-    display: none;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
 }
 
-.loader-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 9999;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+h4.pergunta {
+    font-size: 1.3rem;
+    margin: 20px 0;
+    min-height: 60px;
+    line-height: 1.4;
 }
 
-.spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #333;
-    border-top: 4px solid var(--primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+.opcao {
+    background: #2c3e50;
+    color: white;
+    text-align: left;
+    margin-bottom: 10px;
+    border: 1px solid #444;
 }
 
-.loader-text {
-    margin-top: 15px;
-    color: var(--primary);
-    font-weight: bold;
+.opcao.certa-anim {
+    background: var(--success) !important;
+    border-color: #2ecc71;
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.opcao.errada-anim {
+    background: var(--error) !important;
+    opacity: 0.8;
 }
 
 
-/* Responsividade */
-
-@media (max-width: 600px) {
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-    .landing-nav {
-        padding: 15px 20px;
-    }
-    .steps-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .card.with-header {
-        margin-top: 80px;
-    }
-    .buttons-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-/* ... (Mantenha o CSS anterior) ... */
-
-
-/* Grid de 4 colunas para Desktop */
+/* --- VOTAÇÃO (O Ponto Crítico do Mobile) --- */
 
 .g12-grid {
+    display: grid;
     grid-template-columns: repeat(4, 1fr);
+    /* 4 colunas no PC */
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.vote-btn {
+    padding: 15px 5px;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.vote-icon {
+    font-size: 1.8rem;
+    display: block;
 }
 
 
-/* Cores Específicas dos Times (Bordas e Degradês sutis) */
+/* Cores dos Times */
 
 .time-cor {
     border: 1px solid #fff;
@@ -480,9 +265,6 @@ button {
     border: 1px solid #ff6b6b;
     background: linear-gradient(145deg, #333, #000);
 }
-
-
-/* Tricolor difícil de fazer em CSS puro, usando preto neutro */
 
 .time-san {
     border: 1px solid #ccc;
@@ -530,11 +312,267 @@ button {
     background: #cc0000;
 }
 
+.chart-container {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 30px;
+    height: 400px;
+    /* Altura fixa pro gráfico não sumir */
+}
 
-/* Responsividade para celular (2 colunas) */
 
-@media (max-width: 700px) {
+/* --- RANKING --- */
+
+.leaderboard-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #222;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-size: 1rem;
+    animation: slideIn 0.5s ease forwards;
+    opacity: 0;
+}
+
+
+/* Animação em cascata */
+
+.leaderboard-row:nth-child(1) {
+    animation-delay: 0.1s;
+    background: var(--primary);
+    color: #000;
+}
+
+.leaderboard-row:nth-child(2) {
+    animation-delay: 0.2s;
+    background: #aaa;
+    color: #000;
+}
+
+.leaderboard-row:nth-child(3) {
+    animation-delay: 0.3s;
+    background: #cd7f32;
+    color: #000;
+}
+
+.leaderboard-row:nth-child(n+4) {
+    animation-delay: 0.4s;
+}
+
+
+/* --- LANDING PAGE --- */
+
+.landing-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.btn-cta-large {
+    background: var(--primary);
+    color: #000;
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.btn-secondary {
+    color: white;
+    border: 2px solid white;
+    padding: 13px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+
+
+/* --- UTILITÁRIOS --- */
+
+.erros {
+    color: #ff6b6b;
+    background: rgba(220, 53, 69, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    display: none;
+}
+
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #333;
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: #222;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid var(--primary);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    animation: slideIn 0.3s;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* =========================================
+   📱 AJUSTES PARA CELULAR (Até 768px)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* Corpo e Layout */
+    body {
+        padding: 10px;
+    }
+    .card {
+        padding: 20px;
+        margin-top: 70px;
+        /* Encaixa logo abaixo do header */
+        margin-bottom: 20px;
+    }
+    /* Tipografia Reduzida */
+    h1 {
+        font-size: 1.8rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+    /* Header Compacto */
+    .header {
+        padding: 10px 15px;
+    }
+    .header h3 {
+        max-width: 200px;
+    }
+    /* Trunca nome longo */
+    /* Votação: 2 Colunas em vez de 4 */
     .g12-grid {
         grid-template-columns: 1fr 1fr;
+        /* 2 colunas fica perfeito no celular */
+        gap: 10px;
+    }
+    /* Botões de Voto Mais Compactos */
+    .vote-btn {
+        font-size: 0.85rem;
+        padding: 12px 5px;
+    }
+    .vote-icon {
+        font-size: 1.5rem;
+    }
+    /* Gráfico Responsivo */
+    .chart-container {
+        padding: 5px;
+        height: 350px;
+        /* Altura boa para celular */
+        overflow-x: auto;
+        /* Permite rolar se precisar */
+    }
+    /* Landing Page Mobile */
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .btn-secondary {
+        margin-left: 0;
+    }
+    /* Ranking */
+    .leaderboard-row {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+    /* Botões Gerais */
+    button {
+        padding: 14px;
+        font-size: 1rem;
     }
 }
