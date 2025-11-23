@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 localStorage.setItem('authToken', data.token);
                 localStorage.setItem('userName', data.nome);
-                window.location.href = '/quiz.html';
+                window.location.href = '/hub.html';
 
             } catch (err) {
                 hideLoading();

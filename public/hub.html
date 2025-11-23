@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Torcedor</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="overlay"></div>
+
+    <div class="header">
+        <h3>Olá, <span id="user-name-display">Torcedor</span>!</h3>
+        <a href="#" id="logout-btn">Sair</a>
+    </div>
+
+    <div class="hub-container">
+        <h1>O que vamos fazer hoje?</h1>
+
+        <div class="hub-grid">
+            <a href="/quiz.html" class="hub-card">
+                <div class="hub-icon">🧠</div>
+                <h3>Desafio Quiz</h3>
+                <p>Teste seu conhecimento e aumente o peso do seu voto.</p>
+            </a>
+
+            <a href="/vote.html" class="hub-card">
+                <div class="hub-icon">📊</div>
+                <h3>Votação G12</h3>
+                <p>Vote no seu time e veja o gráfico da torcida em tempo real.</p>
+            </a>
+
+            <a href="/leaderboard.html" class="hub-card">
+                <div class="hub-icon">🏆</div>
+                <h3>Ranking</h3>
+                <p>Veja quem são os maiores sabichões de futebol.</p>
+            </a>
+
+            <a href="/profile.html" class="hub-card">
+                <div class="hub-icon">⚙️</div>
+                <h3>Meu Perfil</h3>
+                <p>Altere seu nome ou atualize seus dados.</p>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Lógica simples do Hub (Inline para facilitar)
+        const token = localStorage.getItem('authToken');
+        if (!token) window.location.href = '/login.html';
+
+        // Mostra nome
+        const nome = localStorage.getItem('userName');
+        if (nome) document.getElementById('user-name-display').innerText = nome;
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.clear();
+            window.location.href = '/login.html';
+        });
+    </script>
+</body>
+
+</html>
