@@ -28,33 +28,26 @@
                     <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
                 </div>
                 <div class="forgot-password">
-                    <a href="#" onclick="alert('Funcionalidade em breve!')">Esqueci minha senha</a>
+                    <a href="#" onclick="showToast('Em breve!', 'error')">Esqueci minha senha</a>
                 </div>
             </div>
 
             <button type="submit">Entrar</button>
 
-            <div class="divider"><span>ou</span></div>
-
-            <button type="button" class="btn-social" onclick="alert('Login com Google em breve!')">
-                <span class="google-icon">G</span> Entrar com Google
-            </button>
-
             <p id="error-message" class="erros"></p>
         </form>
 
         <div class="register-link">
-            <p>Não tem conta? <a href="/registrar-1">Crie grátis agora</a></p>
+            <p>Não tem conta? <a href="/register-1.html">Crie grátis agora</a></p>
         </div>
 
         <div class="legal-small">
-            <a href="/privacidade">Privacidade</a> &bull; <a href="/privacidade">Termos</a>
+            <a href="/privacidade.html">Privacidade</a> &bull; <a href="/privacidade.html">Termos</a>
         </div>
     </div>
 
-    <script src="/auth.js"></script>
-
     <script src="/utils.js"></script>
+    <script src="/auth.js"></script>
 </body>
 
 </html>

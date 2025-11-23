@@ -49,72 +49,89 @@ async function loadData() {
     }
 }
 
-// ... (código de login e loadData mantém igual, SÓ MUDE A FUNÇÃO renderChart) ...
-
 function renderChart(votos) {
     const ctx = document.getElementById('chartVotos').getContext('2d');
 
-    // Ordenar os times do maior para o menor para o gráfico ficar bonito
+    // Ordenar os times do maior para o menor
     const sortedTeams = Object.entries(votos).sort((a, b) => b[1] - a[1]);
     const labels = sortedTeams.map(item => item[0]);
     const dataValues = sortedTeams.map(item => item[1]);
 
     // Cores mapeadas
     const teamColors = {
-        "Corinthians": "#333",
+        "Corinthians": "#ffffff",
         "Palmeiras": "#006437",
         "São Paulo": "#ff0000",
-        "Santos": "#000",
+        "Santos": "#000000",
         "Flamengo": "#c3281e",
-        "Vasco": "#000",
+        "Vasco": "#ffffff",
         "Fluminense": "#9f0220",
-        "Botafogo": "#333",
-        "Atlético-MG": "#000",
+        "Botafogo": "#ffffff",
+        "Atlético-MG": "#ffffff",
         "Cruzeiro": "#0053a0",
         "Grêmio": "#0d80bf",
         "Internacional": "#e20e0e"
     };
-    const bgColors = labels.map(team => teamColors[team] || '#555');
+    // Se o time não tiver cor definida, usa cinza
+    const bgColors = labels.map(team => teamColors[team] || '#777');
+    // Bordas brancas para destacar no fundo escuro
+    const borderColors = labels.map(() => '#ffffff');
 
     chart = new Chart(ctx, {
-        type: 'bar', // Barras
+        type: 'bar',
         data: {
             labels: labels,
             datasets: [{
                 label: 'Pontos de Torcida',
                 data: dataValues,
                 backgroundColor: bgColors,
-                borderRadius: 5,
-                barThickness: 20,
+                borderColor: borderColors, // Borda branca em todos
+                borderWidth: 1,
+                borderRadius: 4,
+                barThickness: 25,
             }]
         },
         options: {
-            indexAxis: 'y', // <--- ISSO DEIXA O GRÁFICO HORIZONTAL
+            indexAxis: 'y', // Gráfico Horizontal
             responsive: true,
-            maintainAspectRatio: false, // Permite crescer verticalmente
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Voto Computado!',
+                    color: '#ffffff',
+                    font: { size: 20, weight: 'bold' },
+                    padding: { bottom: 5 }
+                },
+                subtitle: {
+                    display: true,
+                    text: 'Seu conhecimento de futebol ajudou seu time.',
+                    color: '#cccccc',
+                    font: { size: 14 },
+                    padding: { bottom: 20 }
+                }
+            },
             scales: {
                 x: {
                     beginAtZero: true,
-                    grid: { color: '#ddd' },
-                    ticks: { color: '#333' } // Texto escuro pois o fundo do grafico é branco
+                    grid: { color: 'rgba(255, 255, 255, 0.2)' }, // Linhas da grade mais claras
+                    ticks: { color: '#cccccc' }
                 },
                 y: {
                     grid: { display: false },
-                    ticks: { color: '#000', font: { weight: 'bold' } }
+                    ticks: {
+                        color: '#ffffff', // <--- AQUI ESTA A CORREÇÃO (BRANCO)
+                        font: { size: 14, weight: 'bold' }
+                    }
                 }
-            },
-            plugins: {
-                legend: { display: false },
-                title: { display: false }
             }
         }
     });
 
-    // Ajusta a altura do gráfico dinamicamente
-    document.getElementById('chartVotos').style.height = '500px';
+    // Ajusta a altura do gráfico
+    document.getElementById('chartVotos').style.height = '600px';
 }
-
-// ... (resto do código igual) ...
 async function votar(time) {
     showLoading(); // Spinner enquanto vota
     try {
