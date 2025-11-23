@@ -449,3 +449,36 @@ button {
     border-left: 5px solid var(--primary);
     animation: fadeInUp 0.3s;
 }
+
+
+/* --- CORREÇÃO DO MENU SUPERIOR (LOGIN/CADASTRAR) --- */
+
+
+/* Garante que TODOS os links do menu sejam brancos */
+
+.landing-nav a,
+.landing-nav .nav-links a {
+    color: #ffffff !important;
+    /* O !important força a cor branca */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+
+/* Quando passar o mouse, fica amarelo */
+
+.landing-nav a:hover,
+.landing-nav .nav-links a:hover {
+    color: #ffc107 !important;
+}
+
+
+/* Se o botão de cadastrar tiver a classe de botão, mantém o estilo de botão */
+
+.landing-nav .btn-cta-small {
+    color: #000 !important;
+    /* Texto preto no botão amarelo */
+    background: #ffc107;
+}
