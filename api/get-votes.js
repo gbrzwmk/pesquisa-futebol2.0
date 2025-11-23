@@ -2,7 +2,6 @@ import { db } from './_lib/db.js';
 import jwt from 'jsonwebtoken';
 
 export default async function handler(request, response) {
-    // 1. Pegar o token do usuário (se ele tiver um)
     const authHeader = request.headers.authorization;
     let userId = null;
     if (authHeader) {
@@ -10,45 +9,48 @@ export default async function handler(request, response) {
             const token = authHeader.split(' ')[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             userId = decoded.userId;
-        } catch (e) {
-            // Token inválido ou expirado, mas continuamos (só não vai poder votar)
-        }
+        } catch (e) {}
     }
 
     try {
         const client = await db.connect();
 
-        // 2. BUSCA O TOTAL DE VOTOS (para o gráfico)
+        // MUDANÇA: SUM(weight) em vez de COUNT(*)
         const { rows: voteRows } = await client.sql `
-      SELECT team, COUNT(*) as count FROM votes GROUP BY team
+      SELECT team, SUM(weight) as total_points FROM votes GROUP BY team
     `;
 
-        // Formata os totais
-        const totais = { "Corinthians": 0, "Palmeiras": 0, "São Paulo": 0, "Santos": 0 };
+        // Objeto com todos os times do Eixo (G12) zerados inicialmente
+        const totais = {
+            "Corinthians": 0,
+            "Palmeiras": 0,
+            "São Paulo": 0,
+            "Santos": 0,
+            "Flamengo": 0,
+            "Fluminense": 0,
+            "Vasco": 0,
+            "Botafogo": 0,
+            "Grêmio": 0,
+            "Internacional": 0,
+            "Atlético-MG": 0,
+            "Cruzeiro": 0
+        };
+
         voteRows.forEach(row => {
             if (totais.hasOwnProperty(row.team)) {
-                totais[row.team] = parseInt(row.count);
+                totais[row.team] = parseInt(row.total_points);
             }
         });
 
-        // 3. BUSCA O VOTO DO USUÁRIO ATUAL
         let hasVoted = false;
         if (userId) {
-            const { rows: userVote } = await client.sql `
-        SELECT id FROM votes WHERE user_id = ${userId}
-      `;
-            if (userVote.length > 0) {
-                hasVoted = true;
-            }
+            const { rows: userVote } = await client.sql `SELECT id FROM votes WHERE user_id = ${userId}`;
+            if (userVote.length > 0) hasVoted = true;
         }
 
         client.release();
 
-        // 4. Retorna TUDO para o frontend
-        return response.status(200).json({
-            totais: totais,
-            hasVoted: hasVoted
-        });
+        return response.status(200).json({ totais, hasVoted });
 
     } catch (error) {
         console.error(error);

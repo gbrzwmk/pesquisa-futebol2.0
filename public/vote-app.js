@@ -49,35 +49,72 @@ async function loadData() {
     }
 }
 
+// ... (código de login e loadData mantém igual, SÓ MUDE A FUNÇÃO renderChart) ...
+
 function renderChart(votos) {
-    const ctx = chartContainer.getContext('2d');
+    const ctx = document.getElementById('chartVotos').getContext('2d');
+
+    // Ordenar os times do maior para o menor para o gráfico ficar bonito
+    const sortedTeams = Object.entries(votos).sort((a, b) => b[1] - a[1]);
+    const labels = sortedTeams.map(item => item[0]);
+    const dataValues = sortedTeams.map(item => item[1]);
+
+    // Cores mapeadas
+    const teamColors = {
+        "Corinthians": "#333",
+        "Palmeiras": "#006437",
+        "São Paulo": "#ff0000",
+        "Santos": "#000",
+        "Flamengo": "#c3281e",
+        "Vasco": "#000",
+        "Fluminense": "#9f0220",
+        "Botafogo": "#333",
+        "Atlético-MG": "#000",
+        "Cruzeiro": "#0053a0",
+        "Grêmio": "#0d80bf",
+        "Internacional": "#e20e0e"
+    };
+    const bgColors = labels.map(team => teamColors[team] || '#555');
+
     chart = new Chart(ctx, {
-        type: 'bar',
+        type: 'bar', // Barras
         data: {
-            labels: ['Corinthians', 'Palmeiras', 'São Paulo', 'Santos'],
+            labels: labels,
             datasets: [{
-                label: 'Votos',
-                data: [votos['Corinthians'], votos['Palmeiras'], votos['São Paulo'], votos['Santos']],
-                backgroundColor: ['#ffffff', '#00ff88', '#ff6b6b', '#cccccc'],
-                /* Cores vivas */
-                borderColor: '#333',
-                borderWidth: 2
+                label: 'Pontos de Torcida',
+                data: dataValues,
+                backgroundColor: bgColors,
+                borderRadius: 5,
+                barThickness: 20,
             }]
         },
         options: {
+            indexAxis: 'y', // <--- ISSO DEIXA O GRÁFICO HORIZONTAL
             responsive: true,
+            maintainAspectRatio: false, // Permite crescer verticalmente
             scales: {
-                y: { beginAtZero: true, ticks: { stepSize: 1, color: '#eee' }, grid: { color: '#444' } },
-                x: { ticks: { color: '#eee', font: { weight: 'bold', size: 12 } }, grid: { display: false } }
+                x: {
+                    beginAtZero: true,
+                    grid: { color: '#ddd' },
+                    ticks: { color: '#333' } // Texto escuro pois o fundo do grafico é branco
+                },
+                y: {
+                    grid: { display: false },
+                    ticks: { color: '#000', font: { weight: 'bold' } }
+                }
             },
             plugins: {
                 legend: { display: false },
-                title: { display: true, text: 'Resultado Parcial', color: '#ffc107', font: { size: 18 } }
+                title: { display: false }
             }
         }
     });
+
+    // Ajusta a altura do gráfico dinamicamente
+    document.getElementById('chartVotos').style.height = '500px';
 }
 
+// ... (resto do código igual) ...
 async function votar(time) {
     showLoading(); // Spinner enquanto vota
     try {

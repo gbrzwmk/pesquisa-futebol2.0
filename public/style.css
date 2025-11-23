@@ -452,3 +452,89 @@ button {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* ... (Mantenha o CSS anterior) ... */
+
+
+/* Grid de 4 colunas para Desktop */
+
+.g12-grid {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+
+/* Cores Específicas dos Times (Bordas e Degradês sutis) */
+
+.time-cor {
+    border: 1px solid #fff;
+    background: linear-gradient(145deg, #222, #000);
+}
+
+.time-pal {
+    border: 1px solid #00ff88;
+    background: linear-gradient(145deg, #006437, #004d2a);
+}
+
+.time-sp {
+    border: 1px solid #ff6b6b;
+    background: linear-gradient(145deg, #333, #000);
+}
+
+
+/* Tricolor difícil de fazer em CSS puro, usando preto neutro */
+
+.time-san {
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #000 !important;
+}
+
+.time-fla {
+    border: 1px solid #ff0000;
+    background: linear-gradient(145deg, #000, #8b0000);
+}
+
+.time-vas {
+    border: 1px solid #fff;
+    background: linear-gradient(145deg, #000, #222);
+}
+
+.time-flu {
+    border: 1px solid #00913f;
+    background: linear-gradient(145deg, #8b0000, #004d2a);
+}
+
+.time-bot {
+    border: 1px solid #fff;
+    background: #000;
+}
+
+.time-cam {
+    border: 1px solid #fff;
+    background: #000;
+}
+
+.time-cru {
+    border: 1px solid #0066ff;
+    background: #003399;
+}
+
+.time-gre {
+    border: 1px solid #00ccff;
+    background: #000;
+}
+
+.time-int {
+    border: 1px solid #ff0000;
+    background: #cc0000;
+}
+
+
+/* Responsividade para celular (2 colunas) */
+
+@media (max-width: 700px) {
+    .g12-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

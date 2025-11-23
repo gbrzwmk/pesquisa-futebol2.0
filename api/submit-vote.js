@@ -14,19 +14,29 @@ export default async function handler(request, response) {
 
         const client = await db.connect();
 
-        // Tenta inserir o voto (vai falhar se o user_id já existir na tabela votes)
+        // 1. Descobre a nota do usuário no Quiz
+        const { rows: userRows } = await client.sql `
+        SELECT quiz_score FROM users WHERE id = ${decoded.userId}
+    `;
+
+        // Lógica: Voto Base (1) + Pontos do Quiz. 
+        // Se ele acertou 15, o voto vale 16. Se não jogou (-1), vale 1.
+        let score = userRows[0] ? .quiz_score || 0;
+        if (score < 0) score = 0;
+        const pesoVoto = 1 + score;
+
+        // 2. Salva o voto com o PESO calculado
         try {
             await client.sql `
-        INSERT INTO votes (user_id, team) VALUES (${decoded.userId}, ${team})
+        INSERT INTO votes (user_id, team, weight) VALUES (${decoded.userId}, ${team}, ${pesoVoto})
       `;
             client.release();
-            return response.status(200).json({ message: 'Voto computado!' });
+            return response.status(200).json({ message: `Voto computado com peso ${pesoVoto}!` });
 
         } catch (dbError) {
             client.release();
-            // Erro de "Unique Constraint" (já votou)
             if (dbError.code === '23505') {
-                return response.status(409).json({ error: 'Você só pode votar uma vez!' });
+                return response.status(409).json({ error: 'Você já gastou seu voto!' });
             }
             throw dbError;
         }

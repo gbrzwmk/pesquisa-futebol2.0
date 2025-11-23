@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Votação</title>
+    <title>Votação - G12</title>
     <link rel="stylesheet" href="/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -16,38 +16,39 @@
         <a href="#" id="logout-btn">Sair</a>
     </div>
 
-    <div class="card with-header vote">
-        <h2>Vote no seu time</h2>
+    <div class="card with-header vote" style="max-width: 900px;">
+        <h2>Quem tem a maior torcida?</h2>
+        <p style="margin-bottom: 20px; color: #ccc; font-size: 0.9em;">
+            <span style="color: #ffc107;">★</span> Seu voto vale <strong>1 ponto + sua nota no Quiz</strong>.
+        </p>
 
-        <div id="buttons-container" class="buttons-grid">
-            <button id="Corinthians" class="vote-btn" onclick="votar('Corinthians')">
-                <span class="vote-icon">🦅</span>
-                CORINTHIANS
-            </button>
-            <button id="Palmeiras" class="vote-btn" onclick="votar('Palmeiras')">
-                <span class="vote-icon">🐷</span>
-                PALMEIRAS
-            </button>
-            <button id="SãoPaulo" class="vote-btn" onclick="votar('São Paulo')">
-                <span class="vote-icon">🔴⚪⚫</span>
-                SÃO PAULO
-            </button>
-            <button id="Santos" class="vote-btn" onclick="votar('Santos')">
-                <span class="vote-icon">🐳</span>
-                SANTOS
-            </button>
+        <div id="buttons-container" class="buttons-grid g12-grid">
+            <button class="vote-btn time-cor" onclick="votar('Corinthians')"><span class="vote-icon">🦅</span>Corinthians</button>
+            <button class="vote-btn time-pal" onclick="votar('Palmeiras')"><span class="vote-icon">🐷</span>Palmeiras</button>
+            <button class="vote-btn time-sp" onclick="votar('São Paulo')"><span class="vote-icon">🔴⚪⚫</span>São Paulo</button>
+            <button class="vote-btn time-san" onclick="votar('Santos')"><span class="vote-icon">🐳</span>Santos</button>
+
+            <button class="vote-btn time-fla" onclick="votar('Flamengo')"><span class="vote-icon">🔴⚫</span>Flamengo</button>
+            <button class="vote-btn time-vas" onclick="votar('Vasco')"><span class="vote-icon">✠</span>Vasco</button>
+            <button class="vote-btn time-flu" onclick="votar('Fluminense')"><span class="vote-icon">🇭🇺</span>Fluminense</button>
+            <button class="vote-btn time-bot" onclick="votar('Botafogo')"><span class="vote-icon">⭐</span>Botafogo</button>
+
+            <button class="vote-btn time-cam" onclick="votar('Atlético-MG')"><span class="vote-icon">🐓</span>Atlético-MG</button>
+            <button class="vote-btn time-cru" onclick="votar('Cruzeiro')"><span class="vote-icon">🦊</span>Cruzeiro</button>
+            <button class="vote-btn time-gre" onclick="votar('Grêmio')"><span class="vote-icon">🇪🇪</span>Grêmio</button>
+            <button class="vote-btn time-int" onclick="votar('Internacional')"><span class="vote-icon">🔴⚪</span>Internacional</button>
         </div>
 
         <div id="voted-message" class="voted-message" style="display:none;">
-            <h3>Obrigado pelo seu voto!</h3>
+            <h3>Voto Computado!</h3>
+            <p>Seu conhecimento de futebol ajudou seu time.</p>
         </div>
 
-        <div class="chart-container" style="background:white; padding:10px; border-radius:8px; margin-top:20px;">
+        <div class="chart-container">
             <canvas id="chartVotos"></canvas>
         </div>
     </div>
 
-    <script src="/utils.js"></script>
     <script src="/vote-app.js"></script>
 </body>
 
