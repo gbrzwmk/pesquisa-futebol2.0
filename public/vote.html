@@ -6,87 +6,43 @@
     <title>Votação</title>
     <link rel="stylesheet" href="/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .buttons-grid {
-            margin: 30px auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        
-        .vote-btn {
-            padding: 20px;
-            font-size: 1.2em;
-            border: 2px solid white;
-            border-radius: 10px;
-            cursor: pointer;
-            color: white;
-            transition: 0.3s;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .vote-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
-        }
-        /* Botões com as cores corretas */
-        
-        #Corinthians {
-            background-color: #000000;
-        }
-        
-        #Palmeiras {
-            background-color: #006437;
-        }
-        
-        #SãoPaulo {
-            background-color: #da1414;
-        }
-        
-        #Santos {
-            background-color: #ffffff;
-            color: #000000;
-            border-color: black;
-        }
-        
-        .voted-message {
-            margin: 30px auto;
-            padding: 30px;
-            max-width: 500px;
-        }
-        
-        .voted-message h3 {
-            margin-top: 0;
-            font-size: 1.8em;
-            color: #ffc107;
-        }
-    </style>
 </head>
 
 <body>
     <div class="overlay"></div>
 
     <div class="header">
-        <a href="/profile.html" id="user-name-display" style="text-decoration: none; color: #eee; font-size: 1.1em; font-weight: normal;">Olá!</a>
+        <h3><a href="/profile.html" id="user-name-display" style="text-decoration:none; color:#eee">Olá!</a></h3>
         <a href="#" id="logout-btn">Sair</a>
     </div>
 
-    <div class="card with-header" style="max-width: 700px;">
-        <h2>Vote no seu time do coração</h2>
+    <div class="card with-header vote">
+        <h2>Vote no seu time</h2>
 
         <div id="buttons-container" class="buttons-grid">
-            <button id="Corinthians" class="vote-btn" onclick="votar('Corinthians')">Corinthians</button>
-            <button id="Palmeiras" class="vote-btn" onclick="votar('Palmeiras')">Palmeiras</button>
-            <button id="SãoPaulo" class="vote-btn" onclick="votar('São Paulo')">São Paulo</button>
-            <button id="Santos" class="vote-btn" onclick="votar('Santos')">Santos</button>
+            <button id="Corinthians" class="vote-btn" onclick="votar('Corinthians')">
+                <span class="vote-icon">🦅</span>
+                CORINTHIANS
+            </button>
+            <button id="Palmeiras" class="vote-btn" onclick="votar('Palmeiras')">
+                <span class="vote-icon">🐷</span>
+                PALMEIRAS
+            </button>
+            <button id="SãoPaulo" class="vote-btn" onclick="votar('São Paulo')">
+                <span class="vote-icon">🔴⚪⚫</span>
+                SÃO PAULO
+            </button>
+            <button id="Santos" class="vote-btn" onclick="votar('Santos')">
+                <span class="vote-icon">🐳</span>
+                SANTOS
+            </button>
         </div>
 
         <div id="voted-message" class="voted-message" style="display:none;">
             <h3>Obrigado pelo seu voto!</h3>
         </div>
 
-        <div style="margin-top: 30px; background: white; padding: 10px; border-radius: 10px;">
+        <div class="chart-container" style="background:white; padding:10px; border-radius:8px; margin-top:20px;">
             <canvas id="chartVotos"></canvas>
         </div>
     </div>

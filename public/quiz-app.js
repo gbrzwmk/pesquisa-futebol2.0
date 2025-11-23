@@ -1,13 +1,26 @@
+// public/quiz-app.js
 const token = localStorage.getItem('authToken');
-if (!token) window.location.href = '/login.html'; // Proteção: Se não logado, chuta pro login
+if (!token) window.location.href = '/login.html';
 
+// --- INJEÇÃO DO SPINNER (Automático) ---
+const loaderHTML = `
+<div id="global-loader" class="loader-container">
+    <div class="spinner"></div>
+    <div class="loader-text">Carregando...</div>
+</div>`;
+document.body.insertAdjacentHTML('beforeend', loaderHTML);
+const loader = document.getElementById('global-loader');
+const showLoading = () => loader.style.display = 'flex';
+const hideLoading = () => loader.style.display = 'none';
+
+// --- LÓGICA DO QUIZ ---
 let currentQuestion = 1;
 let score = 0;
-const totalQuestions = 15; // <<--- MUDANÇA AQUI (15 Perguntas)
+const totalQuestions = 15;
 let isAnswering = false;
-let currentCorrectAnswer = ''; // Guarda a resposta certa
+let currentCorrectAnswer = '';
 
-// Configurações iniciais
+// Header Info
 document.getElementById('user-name-display').innerText = `Olá, ${localStorage.getItem('userName')}!`;
 document.getElementById('logout-btn').addEventListener('click', () => {
     localStorage.clear();
@@ -15,59 +28,74 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 });
 
 async function loadQuestion() {
-    isAnswering = true;
+    isAnswering = true; // Bloqueia cliques enquanto carrega
+    showLoading();
+
     document.getElementById('next-btn').style.display = 'none';
     document.getElementById('feedback-msg').style.display = 'none';
-    document.getElementById('options-container').innerHTML = '';
-    document.getElementById('question-text').innerText = 'Carregando...';
+    const container = document.getElementById('options-container');
+    container.innerHTML = '';
 
     try {
         const res = await fetch('/api/get-question', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
+        hideLoading();
+
         if (res.status === 401) { alert('Sessão expirada');
             window.location.href = '/login.html'; return; }
 
         const data = await res.json();
-
-        // Renderiza a pergunta
         document.getElementById('question-text').innerText = data.pergunta;
         document.getElementById('question-count').innerText = `Pergunta ${currentQuestion} de ${totalQuestions}`;
-        currentCorrectAnswer = data.respostaCorreta; // Salva a resposta
+        currentCorrectAnswer = data.respostaCorreta;
 
-        // Renderiza as opções
         data.opcoes.forEach(opcao => {
             const btn = document.createElement('button');
             btn.innerText = opcao;
-            btn.className = 'opcao'; // Classe do CSS
-            btn.onclick = () => checkAnswer(opcao);
-            document.getElementById('options-container').appendChild(btn);
+            btn.className = 'opcao';
+            // Passamos o PRÓPRIO botão para a função checar
+            btn.onclick = () => checkAnswer(opcao, btn);
+            container.appendChild(btn);
         });
+        isAnswering = false; // Libera cliques
 
     } catch (err) {
+        hideLoading();
         console.error(err);
     }
 }
 
-function checkAnswer(selected) {
-    if (!isAnswering) return; // Evita duplo clique
-    isAnswering = false;
+function checkAnswer(selected, btnElement) {
+    if (isAnswering) return;
+    isAnswering = true; // Bloqueia novos cliques
 
     const feedbackEl = document.getElementById('feedback-msg');
     feedbackEl.style.display = 'block';
 
+    // Pega TODOS os botões para pintar o certo
+    const allButtons = document.querySelectorAll('.opcao');
+
     if (selected === currentCorrectAnswer) {
         score++;
         document.getElementById('score-display').innerText = `Pontos: ${score}`;
-        feedbackEl.innerText = "RESPOSTA CORRETA!";
-        feedbackEl.className = "mensagem correta"; // CSS verde
+        feedbackEl.innerText = "GOLAÇO! Resposta Correta!";
+        feedbackEl.className = "mensagem correta";
+        btnElement.classList.add('certa-anim'); // Efeito verde
     } else {
-        feedbackEl.innerText = `QUE PENA! A resposta era: ${currentCorrectAnswer}`;
-        feedbackEl.className = "mensagem errada"; // CSS vermelho
+        feedbackEl.innerText = `NA TRAVE! A resposta era: ${currentCorrectAnswer}`;
+        feedbackEl.className = "mensagem errada";
+        btnElement.classList.add('errada-anim'); // Efeito vermelho
+
+        // Encontra e ilumina o botão certo para o usuário aprender
+        allButtons.forEach(btn => {
+            if (btn.innerText === currentCorrectAnswer) {
+                btn.classList.add('certa-anim');
+            }
+        });
     }
 
-    // Mostra botão "Próxima"
     const nextBtn = document.getElementById('next-btn');
     nextBtn.style.display = 'inline-block';
     nextBtn.onclick = nextQuestion;
@@ -76,7 +104,7 @@ function checkAnswer(selected) {
 async function nextQuestion() {
     currentQuestion++;
     if (currentQuestion > totalQuestions) {
-        // Fim do jogo! Salva o placar no backend
+        showLoading();
         await fetch('/api/save-score', {
             method: 'POST',
             headers: {
@@ -85,8 +113,6 @@ async function nextQuestion() {
             },
             body: JSON.stringify({ score: score })
         });
-
-        // Salva localmente para exibir na próxima tela
         localStorage.setItem('quizScore', score);
         window.location.href = '/result.html';
     } else {
@@ -94,5 +120,4 @@ async function nextQuestion() {
     }
 }
 
-// Inicia
 loadQuestion();

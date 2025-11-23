@@ -1,6 +1,17 @@
+// public/vote-app.js
 const token = localStorage.getItem('authToken');
-// Se não está logado, chuta para a página de login
 if (!token) window.location.href = '/login.html';
+
+// --- SPINNER ---
+const loaderHTML = `
+<div id="global-loader" class="loader-container">
+    <div class="spinner"></div>
+    <div class="loader-text">Computando...</div>
+</div>`;
+document.body.insertAdjacentHTML('beforeend', loaderHTML);
+const loader = document.getElementById('global-loader');
+const showLoading = () => loader.style.display = 'flex';
+const hideLoading = () => loader.style.display = 'none';
 
 document.getElementById('user-name-display').innerText = `Olá, ${localStorage.getItem('userName')}!`;
 document.getElementById('logout-btn').addEventListener('click', () => {
@@ -8,35 +19,36 @@ document.getElementById('logout-btn').addEventListener('click', () => {
     window.location.href = '/login.html';
 });
 
-let chart; // Variável global do gráfico
+let chart;
 const buttonsContainer = document.getElementById('buttons-container');
 const votedMessage = document.getElementById('voted-message');
 const chartContainer = document.getElementById('chartVotos');
 
-// 1. FUNÇÃO DE CARREGAR A PÁGINA (A MAIS IMPORTANTE)
 async function loadData() {
+    showLoading(); // Mostra spinner ao abrir a página
     try {
         const res = await fetch('/api/get-votes', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
 
-        // 2. MOSTRA O GRÁFICO (AGORA VAI FUNCIONAR)
+        hideLoading(); // Esconde spinner
+
         renderChart(data.totais);
 
-        // 3. DECIDE SE MOSTRA OS BOTÕES OU A MENSAGEM "OBRIGADO"
         if (data.hasVoted) {
             buttonsContainer.style.display = 'none';
             votedMessage.style.display = 'block';
         } else {
-            buttonsContainer.style.display = 'grid'; // 'grid' (do nosso CSS)
+            buttonsContainer.style.display = 'grid';
             votedMessage.style.display = 'none';
         }
-
-    } catch (err) { console.error(err); }
+    } catch (err) {
+        hideLoading();
+        console.error(err);
+    }
 }
 
-// 2. FUNÇÃO DE RENDERIZAR O GRÁFICO
 function renderChart(votos) {
     const ctx = chartContainer.getContext('2d');
     chart = new Chart(ctx, {
@@ -46,37 +58,28 @@ function renderChart(votos) {
             datasets: [{
                 label: 'Votos',
                 data: [votos['Corinthians'], votos['Palmeiras'], votos['São Paulo'], votos['Santos']],
-                backgroundColor: ['#000000', '#006437', '#da1414', '#ffffff'],
-                borderColor: '#444',
+                backgroundColor: ['#ffffff', '#00ff88', '#ff6b6b', '#cccccc'],
+                /* Cores vivas */
+                borderColor: '#333',
                 borderWidth: 2
             }]
         },
         options: {
+            responsive: true,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 1, color: '#eee' },
-                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
-                },
-                x: {
-                    ticks: { color: '#333', weight: 'bold' }, // <-- CORRIGIDO
-                    grid: { display: false }
-                }
+                y: { beginAtZero: true, ticks: { stepSize: 1, color: '#eee' }, grid: { color: '#444' } },
+                x: { ticks: { color: '#eee', font: { weight: 'bold', size: 12 } }, grid: { display: false } }
             },
             plugins: {
                 legend: { display: false },
-                title: { display: true, text: 'Resultado Parcial', color: '#ffffff', font: { size: 18 } }
+                title: { display: true, text: 'Resultado Parcial', color: '#ffc107', font: { size: 18 } }
             }
         }
     });
 }
 
-// 3. FUNÇÃO DE VOTAR (AGORA COM FEEDBACK DE "LOADING")
 async function votar(time) {
-    // Para o "Estático": desabilita botões ao clicar
-    buttonsContainer.style.pointerEvents = 'none';
-    buttonsContainer.style.opacity = '0.5';
-
+    showLoading(); // Spinner enquanto vota
     try {
         const res = await fetch('/api/submit-vote', {
             method: 'POST',
@@ -88,29 +91,23 @@ async function votar(time) {
         });
 
         const data = await res.json();
+        hideLoading();
 
         if (res.status === 200) {
-            // Sucesso! Esconde botões e mostra mensagem
             buttonsContainer.style.display = 'none';
             votedMessage.style.display = 'block';
-            updateChart(); // Atualiza o gráfico com o novo voto
+            updateChart();
         } else {
-            alert(data.error); // Ex: "Você só pode votar uma vez"
+            alert(data.error);
         }
-
     } catch (err) {
+        hideLoading();
         alert('Erro ao votar');
-        // Reabilita os botões se der erro
-        buttonsContainer.style.pointerEvents = 'auto';
-        buttonsContainer.style.opacity = '1';
     }
 }
 
-// 4. FUNÇÃO DE ATUALIZAR O GRÁFICO
 async function updateChart() {
-    const res = await fetch('/api/get-votes', {
-        headers: { 'Authorization': `Bearer ${token}` }
-    });
+    const res = await fetch('/api/get-votes', { headers: { 'Authorization': `Bearer ${token}` } });
     const data = await res.json();
     chart.data.datasets[0].data = [
         data.totais['Corinthians'],
@@ -121,5 +118,4 @@ async function updateChart() {
     chart.update();
 }
 
-// Inicia o processo quando a página carrega
 loadData();

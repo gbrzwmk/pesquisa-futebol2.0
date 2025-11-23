@@ -1,7 +1,7 @@
-/* --- 1. CONFIGURAÇÕES GLOBAIS E ANIMAÇÕES --- */
+/* public/style.css - Versão Final Otimizada */
 
 
-/* Reseta o básico e define a fonte */
+/* --- 1. GERAL --- */
 
 * {
     box-sizing: border-box;
@@ -10,9 +10,9 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Fonte mais moderna */
     color: white;
-    /* Puxa a imagem de fundo da pasta /public */
     background-image: url('/fundo.jpg');
     background-size: cover;
     background-position: center;
@@ -22,10 +22,258 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    overflow-x: hidden;
+    /* Evita rolagem lateral no celular */
 }
 
 
-/* Animação de fade-in para os cards */
+/* --- 2. OVERLAY E CARDS --- */
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Um pouco mais escuro para contraste */
+    z-index: 1;
+}
+
+.card {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    background: rgba(20, 20, 20, 0.95);
+    /* Quase preto sólido para leitura */
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    /* Animação suave */
+}
+
+.card.quiz,
+.card.vote {
+    max-width: 700px;
+}
+
+.card.with-header {
+    margin-top: 80px;
+}
+
+
+/* --- 3. HEADER --- */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ffc107;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.header h3,
+.header a {
+    font-size: 1rem;
+    color: #eee;
+}
+
+.header a {
+    color: #ffc107;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+/* --- 4. COMPONENTES --- */
+
+h1 {
+    color: #ffc107;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #eee;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #333;
+    border: 2px solid #444;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #ffc107;
+    background: #222;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: #ffc107;
+    color: #111;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+
+/* --- 5. QUIZ --- */
+
+.opcao {
+    background: #2c3e50;
+    color: white;
+    text-align: left;
+    border: 2px solid transparent;
+    margin-bottom: 12px;
+}
+
+
+/* Feedback Visual */
+
+.opcao.certa-anim {
+    background: #198754 !important;
+    border-color: #28a745;
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
+    transform: scale(1.02);
+}
+
+.opcao.errada-anim {
+    background: #dc3545 !important;
+    opacity: 0.6;
+}
+
+
+/* --- 6. VOTAÇÃO --- */
+
+.buttons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.vote-btn {
+    padding: 20px;
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.vote-icon {
+    font-size: 2rem;
+}
+
+
+/* Cores dos Times */
+
+#Corinthians {
+    background: linear-gradient(145deg, #222, #000);
+    border: 1px solid #444;
+    color: white;
+}
+
+#Palmeiras {
+    background: linear-gradient(145deg, #006437, #004d2a);
+    border: 1px solid #00ff88;
+    color: white;
+}
+
+#SãoPaulo {
+    background: linear-gradient(145deg, #da1414, #b30000);
+    border: 1px solid #ff6b6b;
+    color: white;
+}
+
+#Santos {
+    background: linear-gradient(145deg, #fff, #eee);
+    border: 1px solid #ccc;
+    color: black;
+}
+
+
+/* --- 7. SPINNER DE LOADING --- */
+
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #333;
+    border-top: 5px solid #ffc107;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loader-text {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #ffc107;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 @keyframes fadeIn {
     from {
@@ -39,482 +287,38 @@ body {
 }
 
 
-/* Animação de slide-in para o ranking */
+/* --- 8. RESPONSIVIDADE (CELULAR) --- */
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
+@media (max-width: 600px) {
+    body {
+        align-items: flex-start;
+        padding: 10px;
     }
-    to {
-        opacity: 1;
-        transform: translateX(0);
+    /* Topo no celular */
+    .card {
+        padding: 20px;
+        margin-top: 85px !important;
     }
-}
-
-
-/* Animação de "chacoalhar" para erros */
-
-@keyframes shakeError {
-    0%,
-    100% {
-        transform: translateX(0);
+    /* Ajuste para header fixo */
+    .header {
+        padding: 12px;
     }
-    20%,
-    60% {
-        transform: translateX(-5px);
+    h1 {
+        font-size: 1.8rem;
     }
-    40%,
-    80% {
-        transform: translateX(5px);
+    h2 {
+        font-size: 1.4rem;
     }
-}
-
-
-/* --- 2. LAYOUT PRINCIPAL (CARD & OVERLAY) --- */
-
-.overlay {
-    position: fixed;
-    /* Fixo para cobrir tudo */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
-    z-index: 1;
-}
-
-.card {
-    position: relative;
-    z-index: 2;
-    width: 90%;
-    max-width: 500px;
-    /* Padrão para login/registro */
-    padding: 30px 40px;
-    background: rgba(30, 30, 30, 0.9);
-    border-radius: 10px;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    animation: fadeIn 0.5s ease-out;
-    /* Aplica a animação */
-    overflow: hidden;
-    /* Garante que o header caiba */
-}
-
-
-/* Ajuste para cards com header fixo (Quiz, Votação, etc.) */
-
-.card.with-header {
-    padding-top: 0;
-    /* Header cuida do padding superior */
-    margin-top: 80px;
-    /* Espaço para o header fixo */
-    margin-bottom: 20px;
-}
-
-.card-content {
-    padding: 0 30px 30px 30px;
-}
-
-
-/* Tamanho maior para Quiz e Votação */
-
-.card.quiz,
-.card.vote {
-    max-width: 700px;
-}
-
-
-/* --- 3. HEADER (BARRA SUPERIOR DOURADA) --- */
-
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px 40px;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 3px solid #ffc107;
-    /* Borda dourada */
-    box-sizing: border-box;
-    z-index: 10;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.header h3 {
-    margin: 0;
-    font-size: 1.1em;
-    color: #eee;
-}
-
-.header a {
-    color: #ffc107;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1em;
-    transition: color 0.3s ease;
-}
-
-.header a:hover {
-    color: #ffffff;
-}
-
-
-/* --- 4. FORMULÁRIOS (LOGIN & CADASTRO) --- */
-
-h2 {
-    font-size: 2.2em;
-    margin-bottom: 25px;
-    color: #ffc107;
-    text-align: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    font-size: 0.9em;
-}
-
-input {
-    padding: 12px;
-    margin-bottom: 15px;
-    font-size: 1em;
-    border: 2px solid #555;
-    border-radius: 8px;
-    background: #222;
-    color: white;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-input:focus {
-    border-color: #ffc107;
-    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
-}
-
-button {
-    padding: 15px;
-    font-size: 1.2em;
-    font-weight: bold;
-    cursor: pointer;
-    background: #ffc107;
-    color: #333;
-    border: none;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    margin-top: 10px;
-}
-
-button:hover {
-    background: #e0a800;
-    transform: scale(1.03);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-button:active {
-    transform: scale(0.98);
-    /* Efeito de "pressionar" */
-}
-
-
-/* Botão verde (Finalizar Cadastro, Próxima Pergunta) */
-
-button.btn-green {
-    background-color: #28a745;
-    color: white;
-}
-
-button.btn-green:hover {
-    background-color: #218838;
-}
-
-.erros {
-    color: #f8d7da;
-    background-color: #721c24;
-    padding: 12px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    font-weight: bold;
-    display: none;
-    /* JS controla a exibição */
-    text-align: center;
-    animation: shakeError 0.4s ease;
-}
-
-.register-link {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.register-link a {
-    color: #ffc107;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.register-link a:hover {
-    color: #ffffff;
-}
-
-
-/* --- 5. QUIZ & RESULTADO --- */
-
-.info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 20px 0;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-}
-
-h4.pergunta {
-    font-size: 1.5em;
-    margin: 30px 0;
-    min-height: 50px;
-}
-
-.opcao {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 15px;
-    margin: 10px 0;
-    font-size: 1.2em;
-    font-weight: bold;
-    cursor: pointer;
-    color: white;
-    background: #007bff;
-    border: none;
-    border-radius: 8px;
-    transition: all 0.2s ease-in-out;
-}
-
-.opcao:hover {
-    background: #0056b3;
-    transform: scale(1.02);
-}
-
-.mensagem {
-    font-weight: bold;
-    margin: 20px 0;
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 1.2em;
-    text-align: center;
-    animation: fadeIn 0.3s ease;
-}
-
-.correta {
-    color: #d4edda;
-    background-color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.errada {
-    color: #f8d7da;
-    background-color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-
-/* Resultado Quiz */
-
-h1.score {
-    color: #ffc107;
-    font-size: 4.5em;
-    margin: 10px 0;
-    text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
-}
-
-.nav-links {
-    margin-top: 30px;
-}
-
-.nav-links a {
-    color: white;
-    background-color: #28a745;
-    padding: 15px 25px;
-    border-radius: 10px;
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: bold;
-    font-size: 1.2em;
-    transition: all 0.3s ease;
-}
-
-.nav-links a:hover {
-    background-color: #218838;
-    transform: scale(1.05);
-}
-
-
-/* --- 6. VOTAÇÃO --- */
-
-.buttons-grid {
-    margin: 30px auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    transition: opacity 0.3s ease;
-}
-
-.vote-btn {
-    padding: 20px;
-    font-size: 1.2em;
-    border: 2px solid white;
-    border-radius: 10px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease-in-out;
-}
-
-.vote-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
-}
-
-#Corinthians {
-    background-color: #000000;
-}
-
-#Palmeiras {
-    background-color: #006437;
-}
-
-#SãoPaulo {
-    background-color: #da1414;
-}
-
-#Santos {
-    background-color: #ffffff;
-    color: #000000;
-    border-color: black;
-}
-
-.chart-container {
-    margin-top: 30px;
-    background: rgba(255, 255, 255, 0.9);
-    /* Fundo branco pro gráfico */
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.voted-message {
-    margin: 30px auto;
-    padding: 30px;
-    max-width: 500px;
-    animation: fadeIn 0.5s ease;
-}
-
-.voted-message h3 {
-    margin-top: 0;
-    font-size: 1.8em;
-    color: #ffc107;
-}
-
-
-/* --- 7. RANKING --- */
-
-.leaderboard {
-    width: 100%;
-    margin-top: 20px;
-}
-
-.leaderboard-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px;
-    border-radius: 8px;
-    background: #222;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-    /* Animação de Slide */
-    opacity: 0;
-    transform: translateX(-20px);
-    animation: slideIn 0.5s ease-out forwards;
-}
-
-
-/* Efeito escadinha na animação */
-
-.leaderboard-row:nth-child(2) {
-    animation-delay: 0.1s;
-}
-
-.leaderboard-row:nth-child(3) {
-    animation-delay: 0.2s;
-}
-
-.leaderboard-row:nth-child(4) {
-    animation-delay: 0.3s;
-}
-
-.leaderboard-row:nth-child(5) {
-    animation-delay: 0.4s;
-}
-
-.leaderboard-row:nth-child(6) {
-    animation-delay: 0.5s;
-}
-
-.leaderboard-row:nth-child(7) {
-    animation-delay: 0.6s;
-}
-
-.leaderboard-row:nth-child(8) {
-    animation-delay: 0.7s;
-}
-
-.leaderboard-row:nth-child(9) {
-    animation-delay: 0.8s;
-}
-
-.leaderboard-row:nth-child(10) {
-    animation-delay: 0.9s;
-}
-
-
-/* Destaques do Pódio */
-
-.leaderboard-row:nth-child(1) {
-    background: #ffc107;
-    color: #333;
-    font-weight: bold;
-}
-
-.leaderboard-row:nth-child(2) {
-    background: #aaa;
-    color: #333;
-    font-weight: bold;
-}
-
-.leaderboard-row:nth-child(3) {
-    background: #cd7f32;
-    color: white;
-    font-weight: bold;
-}
-
-.rank-name {
-    text-align: left;
-}
-
-.rank-score {
-    font-weight: bold;
+    .buttons-grid {
+        grid-template-columns: 1fr;
+    }
+    /* Botões empilhados no celular */
+    .vote-btn {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 15px;
+    }
+    .chart-container {
+        padding: 10px;
+    }
 }
