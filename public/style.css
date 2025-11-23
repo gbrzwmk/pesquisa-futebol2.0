@@ -600,3 +600,43 @@ button {
     font-size: 0.95rem;
     line-height: 1.4;
 }
+
+
+/* --- CORREÇÃO DE VISIBILIDADE DO HUB --- */
+
+
+/* Força os cards a ficarem visíveis imediatamente */
+
+.hub-card {
+    opacity: 1 !important;
+    /* Garante que apareça */
+    animation: none;
+    /* Remove animação temporariamente para evitar bugs */
+    background: rgba(30, 30, 30, 0.95);
+    /* Fundo mais escuro para leitura */
+}
+
+
+/* Conserta a cor dos links do topo (Sair/Olá) que estavam escuros */
+
+.header a,
+.header a:visited {
+    color: #ffc107 !important;
+    /* Amarelo Dourado */
+}
+
+.header h3 {
+    color: #ffffff !important;
+    /* Branco */
+}
+
+
+/* Garante que o grid não quebre */
+
+.hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+    width: 100%;
+}
